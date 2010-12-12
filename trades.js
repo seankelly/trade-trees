@@ -42,6 +42,7 @@ function check_done() {
     msgs.text("Done!");
     msgs.hide();
 
+    // Don't load players until after everything has finished.
     load_players();
 }
 
