@@ -1,7 +1,7 @@
 var trades = {
     transactions: [],
     players:      [],
-    loaded:       0
+    loaded: 0
 };
 
 function show_error(request, status, exception) {
@@ -47,6 +47,24 @@ function check_done() {
 }
 
 function load_players() {
+    player_list = [];
+    for (var id in trades.players) {
+        player_list.push({ name: trades.players[id].name, id: id });
+    }
+    player_list.sort(function(a, b) {
+        if (a.name < b.name) return -1;
+        else if (a.name == b.name) return 0;
+        return 1;
+    });
+
+    var options = [];
+    for (var i = 0; i < player_list.length; i++) {
+        id = player_list[i].id;
+        name = player_list[i].name;
+        options.push('<option value="' + id '">' + name + '</option>');
+    }
+    var contents = options.join("");
+    $("#player").append(contents);
 }
 
 function load_transactions() {
