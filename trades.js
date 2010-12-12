@@ -59,14 +59,16 @@ function load_players() {
         return 1;
     });
 
-    var options = [];
+    var options = ['<option value="---" selected="selected" disabled="disabled">Choose a player</option>'];
     for (var i = 0; i < player_list.length; i++) {
         id = player_list[i].id;
         name = player_list[i].name;
         options.push('<option value="' + id + '">' + name + '</option>');
     }
     var contents = options.join("");
-    $("#player").append(contents);
+    var select = $("#player");
+    select.empty();
+    select.append(contents);
 }
 
 function load_transactions() {
