@@ -78,5 +78,27 @@ function load_players() {
 function load_transactions(option) {
     if (trades.loaded != 2) return;
     var playerid = option.value;
-    alert(playerid);
+    var transactions = trades.players[playerid].transactions;
+
+    var trans_list = [];
+    for (var i = 0; i < transactions.length; i++) {
+        trans_list.push(transactions[i]);
+    }
+    trans_list.sort(function(a, b) {
+        return (a - b);
+    });
+
+    var options = ['<option value="---" selected="selected" disabled="disabled">Choose a transaction</option>'];
+    var last_trans = -1;
+    for (var i = 0; i < trans_list.length; i++) {
+        var id = trans_list[i];
+        if (id == last_trans) continue;
+        options.push('<option value="' + id + '">' + id + '</option>');
+        last_trans = id;
+    }
+
+    var contents = options.join('');
+    var trans = $("#trade");
+    trans.empty();
+    trans.append(contents);
 }
