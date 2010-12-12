@@ -93,7 +93,7 @@ function load_transactions(option) {
     for (var i = 0; i < trans_list.length; i++) {
         var id = trans_list[i];
         if (id == last_trans) continue;
-        options.push('<option value="' + id + '">' + id + '</option>');
+        options.push('<option value="' + id + '">' + terse_transaction(id, playerid, 1) + '</option>');
         last_trans = id;
     }
 
@@ -101,4 +101,21 @@ function load_transactions(option) {
     var trans = $("#trade");
     trans.empty();
     trans.append(contents);
+}
+
+// Returns a terse string for the given transaction id and player.
+// N is which line to parse (in case there is more than one).
+function terse_transaction(id, playerid, N) {
+    if (!trades.transactions[id]) return;
+    var times_found = 0;
+    for (var i = 0; i < trades.transactions[id].length; i++) {
+        line = trades.transactions[id][i];
+        if (line.player == playerid) {
+            times_found++;
+            if (times_found < N) continue;
+        }
+        // Preliminary response.
+        // This will need to be changed to vary per type.
+        return line.date + " (" + line.from + " => " + line.to + ")";
+    }
 }
