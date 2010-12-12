@@ -61,7 +61,7 @@ function load_players() {
     for (var i = 0; i < player_list.length; i++) {
         id = player_list[i].id;
         name = player_list[i].name;
-        options.push('<option value="' + id '">' + name + '</option>');
+        options.push('<option value="' + id + '">' + name + '</option>');
     }
     var contents = options.join("");
     $("#player").append(contents);
