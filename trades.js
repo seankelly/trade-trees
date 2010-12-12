@@ -69,7 +69,7 @@ function load_players() {
     select.empty();
     select.append(contents);
 
-    var trans = $("#trades");
+    var trans = $("#trade");
     trans.empty();
     trans.append('<option value="---" selected="selected" disabled="disabled">Select a player above</option>');
 }
