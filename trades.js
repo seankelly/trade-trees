@@ -83,16 +83,15 @@ function load_transactions(option) {
     var trans_list = [];
     for (var i = 0; i < transactions.length; i++) {
         var id = transactions[i];
-        var date = trades.transactions[id].date;
         trans_list.push({
             id: id,
-            date: date,
+            sort: i,
             desc: terse_transaction(id, playerid, 1),
         });
     }
     trans_list.sort(function(a, b) {
-        if (a.date < b.date) return -1;
-        if (a.date == b.date) return (a.id - b.id);
+        if (a.sort < b.sort) return -1;
+        if (a.sort == b.sort) return 0;
         return 1;
     });
 
