@@ -43,7 +43,6 @@ function check_done() {
     msgs.hide();
 
     load_players();
-    load_transactions();
 }
 
 function load_players() {
@@ -69,7 +68,11 @@ function load_players() {
     var select = $("#player");
     select.empty();
     select.append(contents);
+
+    var trans = $("#trades");
+    trans.empty();
+    trans.append('<option value="---" selected="selected" disabled="disabled">Select a player above</option>');
 }
 
-function load_transactions() {
+function load_transactions(player) {
 }
