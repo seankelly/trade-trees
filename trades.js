@@ -82,19 +82,26 @@ function load_transactions(option) {
 
     var trans_list = [];
     for (var i = 0; i < transactions.length; i++) {
-        trans_list.push(transactions[i]);
+        var id = transactions[i];
+        var date = trades.transactions[id].date;
+        trans_list.push({
+            id: id,
+            date: date,
+            desc: terse_transaction(id, playerid, 1),
+        });
     }
     trans_list.sort(function(a, b) {
-        return (a - b);
+        if (a.date < b.date) return -1;
+        if (a.date == b.date) return (a.id - b.id);
+        return 1;
     });
 
     var options = ['<option value="---" selected="selected" disabled="disabled">Choose a transaction</option>'];
     var last_trans = -1;
     for (var i = 0; i < trans_list.length; i++) {
-        var id = trans_list[i];
-        if (id == last_trans) continue;
-        options.push('<option value="' + id + '">' + terse_transaction(id, playerid, 1) + '</option>');
-        last_trans = id;
+        if (trans_list[i].id == last_trans) continue;
+        options.push('<option value="' + trans_list[i].id + '">' + trans_list[i].desc + '</option>');
+        last_trans = trans_list[i].id;
     }
 
     var contents = options.join('');
