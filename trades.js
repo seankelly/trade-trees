@@ -75,5 +75,8 @@ function load_players() {
     trans.append('<option value="---" selected="selected" disabled="disabled">Select a player above</option>');
 }
 
-function load_transactions(player) {
+function load_transactions(option) {
+    if (trades.loaded != 2) return;
+    var playerid = option.value;
+    alert(playerid);
 }
