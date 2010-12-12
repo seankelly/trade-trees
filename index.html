@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <title>
+   MLB Trade Trees
+  </title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <link rel="stylesheet" type="text/css" media="screen" title="main" href="/style/main.css" />
+  <link rel="stylesheet" type="text/css" media="screen" title="main" href="trade-trees.css" />
+  <script type="text/javascript" src="/js/jquery-1.4.2.min.js"></script>
+  <script type="text/javascript" src="/js/json.min.js"></script>
+  <script type="text/javascript" src="trades.js"></script>
+  <script type="text/javascript">
+      $(document).ready(function() {
+          initialize();
+      });
+  </script>
+ </head>
+<body>
+<div id="page">
+<div id="header">
+<h1>MLB Trade Trees</h1>
+</div>
+<div id="navigation">
+ <ul id="sections">
+  <li><a href="/">Home</a></li>
+  <li><a href="/articles/">Articles</a></li>
+  <li><a href="/projects/">Projects</a></li>
+  <li><a href="/unsorted/">Unsorted</a></li>
+ </ul>
+ <div style="clear:both"></div>
+</div>
+<div id="content">
+    <p id="messages">Loading...</p>
+    <h3>Choose player and tree</h3>
+    <ul>
+        <li><p>
+            Player: <select id="player"><option value="---" disabled="disabled">Choose a player</option></select>
+        </p></li>
+        <li><p>
+            Trade: <select id="trade"><option value="---" disabled="disabled">Choose a trade</option></select>
+        </p></li>
+    </ul>
+    <h3>Trade Tree</h3>
+    <p id="trade-results">
+    </p>
+</div>
+<div id="footer"></div>
+</div>
+</body>
+</html>
