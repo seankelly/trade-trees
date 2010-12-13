@@ -49,9 +49,12 @@ function check_done() {
 function load_players() {
     player_list = [];
     for (var id in trades.players) {
-        var name = trades.players[id].name;
-        if (name != "")
+        var first = trades.players[id].first;
+        var last = trades.players[id].last;
+        if (first != "" && last != "") {
+            var name = last + ", " + first;
             player_list.push({ name: name, id: id });
+        }
     }
     player_list.sort(function(a, b) {
         if (a.name < b.name) return -1;
