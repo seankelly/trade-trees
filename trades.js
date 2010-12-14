@@ -1,7 +1,6 @@
 var trades = {
     transactions: [],
     players:      [],
-    loaded: 0
 };
 
 function show_error(request, status, exception) {
@@ -11,39 +10,24 @@ function show_error(request, status, exception) {
 }
 
 function initialize() {
-    // Fetch the players.json and transactions.json files.
-    trades.loaded = 0;
+    // This loads the master player list.
+    // No info is otherwise contained in it. Must fetch each player's
+    // file separately. This will improve loading times at the expense
+    // of a teeeny bit of lag for each load. With caching, all should be
+    // just fine.
     $.ajax({
-        url: 'players.json',
-        dataType: "text",
+        url: 'json/players.json',
+        dataType: "json",
         success: function(data, status, request) {
-            trades.players = JSON.parse(data);
-            trades.loaded++;
-            check_done();
+            trades.players = data;
+            msgs = $("#messages");
+            // No one will see this, but that's okay.
+            msgs.text("Done!");
+            msgs.hide();
+            load_players();
         },
         error: show_error
     });
-    $.ajax({
-        url: 'transactions.json',
-        dataType: "text",
-        success: function(data, status, request) {
-            trades.transactions = JSON.parse(data);
-            trades.loaded++;
-            check_done();
-        },
-        error: show_error
-    });
-}
-
-function check_done() {
-    if (trades.loaded != 2) return;
-    msgs = $("#messages");
-    // No one will see this, but that's okay.
-    msgs.text("Done!");
-    msgs.hide();
-
-    // Don't load players until after everything has finished.
-    load_players();
 }
 
 function load_players() {
