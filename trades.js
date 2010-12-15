@@ -1,6 +1,7 @@
 var trades = {
     transactions: [],
     players:      [],
+    loaded: false
 };
 
 function show_error(request, status, exception) {
@@ -60,16 +61,60 @@ function load_players() {
     var trans = $("#trade");
     trans.empty();
     trans.append('<option value="---" selected="selected" disabled="disabled">Select a player above</option>');
+
+    trades.loaded = true;
 }
 
-function load_transactions(option) {
-    if (trades.loaded != 2) return;
+function get_transactions(option) {
+    if (!trades.loaded) return;
+
     var playerid = option.value;
+    // Check if already loaded..
+    if (trades.transactions[playerid]) {
+        // Jump straight into the loading part.
+        load_transactions(playerid);
+        return;
+    }
+
+    $.ajax({
+        url: "json/" + playerid + ".json",
+        dataType: "json",
+        success: function(data, status, request) {
+            trades.players[playerid].transactions = data;
+            var len = data.length;
+            for (var i = 0; i < len; i++) {
+                get_each_transaction(playerid, data[i]);
+            }
+        },
+        error: show_error
+    });
+}
+
+function get_each_transaction(playerid, id) {
+    // If it already exists, then don't bother.
+    if (trades.transactions[id]) {
+        load_transactions(playerid);
+        return;
+    }
+    $.ajax({
+        url: "json/" + id + ".json",
+        dataType: "json",
+        success: function(data, status, request) {
+            trades.transactions[id] = data;
+            load_transactions(playerid);
+        },
+        error: show_error
+    });
+}
+
+function load_transactions(playerid) {
     var transactions = trades.players[playerid].transactions;
 
     var trans_list = [];
     for (var i = 0; i < transactions.length; i++) {
         var id = transactions[i];
+        // Verify that all of the transactions needed are loaded.
+        if (!trades.transactions[id]) return;
         trans_list.push({
             id: id,
             sort: i,
