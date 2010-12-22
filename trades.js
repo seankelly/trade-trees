@@ -93,6 +93,7 @@ function get_player(option) {
 function verify_downloaded(playerid) {
     var transactions = trades.transactions[playerid];
 
+    if (!transactions) return false;
     for (var i = 0; i < transactions.length; i++) {
         var id = transactions[i];
         if (!trades.transactions[id]) return false;
