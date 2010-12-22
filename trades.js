@@ -90,9 +90,19 @@ function get_player(option) {
     });
 }
 
+function verify_downloaded(playerid) {
+    var transactions = trades.transactions[playerid];
+
+    for (var i = 0; i < transactions.length; i++) {
+        var id = transactions[i];
+        if (!trades.transactions[id]) return false;
+    }
+    return true;
+}
+
 function get_each_transaction(playerid, id) {
     // If it already exists, then don't bother.
-    if (trades.transactions[id]) {
+    if (verify_downloaded(playerid)) {
         load_transactions(playerid);
         return;
     }
@@ -101,7 +111,10 @@ function get_each_transaction(playerid, id) {
         dataType: "json",
         success: function(data, status, request) {
             trades.transactions[id] = data;
-            load_transactions(playerid);
+            if (verify_downloaded(playerid)) {
+                load_transactions(playerid);
+                return;
+            }
         },
         error: show_error
     });
@@ -113,8 +126,6 @@ function load_transactions(playerid) {
     var trans_list = [];
     for (var i = 0; i < transactions.length; i++) {
         var id = transactions[i];
-        // Verify that all of the transactions needed are loaded.
-        if (!trades.transactions[id]) return;
         trans_list.push({
             id: id,
             sort: i,
