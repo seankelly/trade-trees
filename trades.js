@@ -65,7 +65,7 @@ function load_players() {
     trades.loaded = true;
 }
 
-function get_transactions(option) {
+function get_player(option) {
     if (!trades.loaded) return;
 
     var playerid = option.value;
