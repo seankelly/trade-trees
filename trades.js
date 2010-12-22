@@ -70,8 +70,7 @@ function get_player(option) {
 
     var playerid = option.value;
     // Check if already loaded..
-    if (trades.players[playerid]) {
-        // Jump straight into the loading part.
+    if (verify_downloaded(playerid)) {
         load_transactions(playerid);
         return;
     }
