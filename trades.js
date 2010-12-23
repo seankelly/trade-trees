@@ -65,10 +65,28 @@ function load_players() {
     trades.loaded = true;
 }
 
-function get_player(option) {
+/*
+ * UI functions.
+ */
+
+function choose_player(option) {
     if (!trades.loaded) return;
 
     var playerid = option.value;
+}
+
+function choose_transaction(option) {
+    var trans_id = option.value;
+}
+
+/*
+ * Internal functions.
+ */
+
+// Get a player and all of the transactions that involve him.
+// 'func' is the function that will be called when everything
+// has been fetched.
+function get_player(playerid, func) {
     // Check if already loaded..
     if (verify_downloaded(playerid)) {
         load_transactions(playerid);

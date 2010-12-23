@@ -32,10 +32,10 @@
     <h3>Choose player and tree</h3>
     <ul>
         <li><p>
-            Player: <select id="player" onchange="get_player(this)"><option value="---" disabled="disabled">Choose a player</option></select>
+            Player: <select id="player" onchange="choose_player(this)"><option value="---" disabled="disabled">Choose a player</option></select>
         </p></li>
         <li><p>
-            Trade: <select id="trade"><option value="---" disabled="disabled">Choose a trade</option></select>
+            Trade: <select id="trade" onchange="choose_transaction(this)"><option value="---" disabled="disabled">Choose a trade</option></select>
         </p></li>
     </ul>
     <h3>Trade Tree</h3>
