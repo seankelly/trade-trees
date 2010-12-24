@@ -107,17 +107,6 @@ function get_player(playerid, func) {
     });
 }
 
-function verify_downloaded(playerid) {
-    var transactions = trades.players[playerid].transactions;
-
-    if (!transactions) return false;
-    for (var i = 0; i < transactions.length; i++) {
-        var id = transactions[i];
-        if (!trades.transactions[id]) return false;
-    }
-    return true;
-}
-
 function get_each_transaction(playerid, id) {
     // If it already exists, then don't bother.
     if (trades.transactions[id]) return;
@@ -133,6 +122,17 @@ function get_each_transaction(playerid, id) {
         },
         error: show_error
     });
+}
+
+function verify_downloaded(playerid) {
+    var transactions = trades.players[playerid].transactions;
+
+    if (!transactions) return false;
+    for (var i = 0; i < transactions.length; i++) {
+        var id = transactions[i];
+        if (!trades.transactions[id]) return false;
+    }
+    return true;
 }
 
 function show_transactions(playerid) {
