@@ -89,7 +89,7 @@ function choose_transaction(option) {
 function get_player(playerid, func) {
     // Check if already loaded..
     if (verify_downloaded(playerid)) {
-        load_transactions(playerid);
+        show_transactions(playerid);
         return;
     }
 
@@ -121,7 +121,7 @@ function verify_downloaded(playerid) {
 function get_each_transaction(playerid, id) {
     // If it already exists, then don't bother.
     if (verify_downloaded(playerid)) {
-        load_transactions(playerid);
+        show_transactions(playerid);
         return;
     }
     $.ajax({
@@ -130,7 +130,7 @@ function get_each_transaction(playerid, id) {
         success: function(data, status, request) {
             trades.transactions[id] = data;
             if (verify_downloaded(playerid)) {
-                load_transactions(playerid);
+                show_transactions(playerid);
                 return;
             }
         },
@@ -138,7 +138,7 @@ function get_each_transaction(playerid, id) {
     });
 }
 
-function load_transactions(playerid) {
+function show_transactions(playerid) {
     var transactions = trades.players[playerid].transactions;
 
     var trans_list = [];
