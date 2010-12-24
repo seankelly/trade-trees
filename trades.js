@@ -89,7 +89,7 @@ function choose_transaction(option) {
 function get_player(playerid, func) {
     // Check if already loaded..
     if (verify_downloaded(playerid)) {
-        show_transactions(playerid);
+        func();
         return;
     }
 
@@ -120,18 +120,15 @@ function verify_downloaded(playerid) {
 
 function get_each_transaction(playerid, id) {
     // If it already exists, then don't bother.
-    if (verify_downloaded(playerid)) {
-        show_transactions(playerid);
-        return;
-    }
+    if (trades.transactions[id]) return;
+
     $.ajax({
         url: "json/" + id + ".json",
         dataType: "json",
         success: function(data, status, request) {
             trades.transactions[id] = data;
             if (verify_downloaded(playerid)) {
-                show_transactions(playerid);
-                return;
+                func();
             }
         },
         error: show_error
