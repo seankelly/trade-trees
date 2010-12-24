@@ -73,6 +73,7 @@ function choose_player(option) {
     if (!trades.loaded) return;
 
     var playerid = option.value;
+    get_player(playerid, function() { show_transactions(playerid); });
 }
 
 function choose_transaction(option) {
