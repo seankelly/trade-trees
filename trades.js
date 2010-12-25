@@ -200,11 +200,13 @@ function show_transactions(playerid) {
     for (var i = 0; i < transactions.length; i++) {
         var id = transactions[i];
         var T = trades.transactions[id];
-        trans_list.push({
-            id: id,
-            sort: i,
-            desc: T.format(playerid)
-        });
+        if (T.type == 'T') {
+            trans_list.push({
+                id: id,
+                sort: i,
+                desc: T.format(playerid)
+            });
+        }
     }
     trans_list.sort(function(a, b) {
         if (a.sort < b.sort) return -1;
