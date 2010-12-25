@@ -22,6 +22,42 @@ function Transaction(id, player_list) {
     this.type = type;
 }
 
+// Format a transaction for a given player for display.
+function Transaction.prototype.format(playerid, N) {
+    var player = this.players[playerid];
+    if (!player)
+        return '';
+
+    if (N == undefined)
+        N = 1;
+
+    if (N > player.length)
+        return '';
+
+    var trans = player[N];
+
+    var text = trans.date;
+    switch (trans.type) {
+        case 'T':
+            text += ": Traded from " + trans.from + " to " + trans.to;
+            break;
+
+        case 'Da':
+            text += ": Drafted by " + trans.to;
+            break;
+
+        case 'Fg':
+            text += ": Granted free agency by " + trans.from;
+            break;
+
+        case 'F':
+            text += ": Signed by " + trans.to;
+            break;
+    }
+
+    return text;
+}
+
 function show_error(request, status, exception) {
     msgs = $("#messages");
     msgs.addClass("error");
@@ -160,10 +196,11 @@ function show_transactions(playerid) {
     var trans_list = [];
     for (var i = 0; i < transactions.length; i++) {
         var id = transactions[i];
+        var T = trades.transaction[id];
         trans_list.push({
             id: id,
             sort: i,
-            desc: terse_transaction(id, playerid, 1),
+            desc: T.format(playerid)
         });
     }
     trans_list.sort(function(a, b) {
@@ -184,21 +221,4 @@ function show_transactions(playerid) {
     var trans = $("#trade");
     trans.empty();
     trans.append(contents);
-}
-
-// Returns a terse string for the given transaction id and player.
-// N is which line to parse (in case there is more than one).
-function terse_transaction(id, playerid, N) {
-    if (!trades.transactions[id]) return;
-    var times_found = 0;
-    for (var i = 0; i < trades.transactions[id].length; i++) {
-        line = trades.transactions[id][i];
-        if (line.player == playerid) {
-            times_found++;
-            if (times_found < N) continue;
-        }
-        // Preliminary response.
-        // This will need to be changed to vary per type.
-        return line.date + " (" + line.from + " => " + line.to + ")";
-    }
 }
