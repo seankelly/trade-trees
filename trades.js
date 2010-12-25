@@ -46,13 +46,16 @@ Transaction.prototype.format = function(playerid, N) {
             text += ": Drafted by " + trans.to;
             break;
 
+        case 'F':
+            text += ": Signed by " + trans.to;
+            break;
+
         case 'Fg':
             text += ": Granted free agency by " + trans.from;
             break;
 
-        case 'F':
+        case 'Fo':
             text += ": Signed by " + trans.to;
-            break;
     }
 
     return text;
