@@ -35,8 +35,7 @@ Transaction.prototype.format = function(playerid, N) {
     if (N > player.length)
         return '';
 
-    var trans = player[N];
-
+    var trans = player[N-1];
     var text = trans.date;
     switch (trans.type) {
         case 'T':
