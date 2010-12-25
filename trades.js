@@ -23,7 +23,7 @@ function Transaction(id, player_list) {
 }
 
 // Format a transaction for a given player for display.
-function Transaction.prototype.format(playerid, N) {
+Transaction.prototype.format = function(playerid, N) {
     var player = this.players[playerid];
     if (!player)
         return '';
