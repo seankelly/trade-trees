@@ -137,6 +137,13 @@ function choose_transaction(option) {
     var trans_id = option.value;
 }
 
+function create_tree() {
+}
+
+function clear_tree() {
+    $("#trade-results").empty();
+}
+
 /*
  * Internal functions.
  */
