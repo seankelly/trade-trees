@@ -214,7 +214,14 @@ function show_transactions(playerid) {
         return 1;
     });
 
-    var options = ['<option value="---" selected="selected" disabled="disabled">Choose a transaction</option>'];
+    // If there are no trades located, then change the "prompt".
+    // Ideally I could just not display them in the first place, but
+    // would need to move that logic into the generator of the JSON.
+    var options;
+    if (trans_list.length > 0)
+        options = ['<option value="---" selected="selected" disabled="disabled">Choose a transaction</option>'];
+    else
+        options = ['<option value="---" selected="selected" disabled="disabled">No trades found!</option>'];
     var last_trans = -1;
     for (var i = 0; i < trans_list.length; i++) {
         if (trans_list[i].id == last_trans) continue;
