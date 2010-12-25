@@ -135,7 +135,7 @@ function choose_player(option) {
 
 function choose_transaction(option) {
     var trans_id = option.value;
-    var playerid = $("#player").value;
+    var playerid = $("#player").val();
 
     var f = (function() {
         var tree = { playerid: {} };
