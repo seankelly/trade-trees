@@ -6,13 +6,20 @@ var trades = {
 
 function Transaction(id, player_list) {
     this.id = id;
+    var type;
     var players = {};
     for (var i = 0; i < player_list.length; i++) {
         var info = player_list[i];
         var player = players[info.player] || [];
         player.push(info);
+        if (type == undefined)
+            type = info.type;
+        else if (type != info.type)
+            type = '';
+        players[playerid] = player;
     }
     this.players = players;
+    this.type = type;
 }
 
 function show_error(request, status, exception) {
