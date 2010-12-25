@@ -197,7 +197,7 @@ function show_transactions(playerid) {
     var trans_list = [];
     for (var i = 0; i < transactions.length; i++) {
         var id = transactions[i];
-        var T = trades.transaction[id];
+        var T = trades.transactions[id];
         trans_list.push({
             id: id,
             sort: i,
