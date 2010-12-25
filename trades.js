@@ -4,6 +4,17 @@ var trades = {
     loaded: false
 };
 
+function Transaction(id, player_list) {
+    this.id = id;
+    var players = {};
+    for (var i = 0; i < player_list.length; i++) {
+        var info = player_list[i];
+        var player = players[info.player] || [];
+        player.push(info);
+    }
+    this.players = players;
+}
+
 function show_error(request, status, exception) {
     msgs = $("#messages");
     msgs.addClass("error");
@@ -116,7 +127,7 @@ function get_each_transaction(playerid, id, func) {
         url: "json/" + id + ".json",
         dataType: "json",
         success: function(data, status, request) {
-            trades.transactions[id] = data;
+            trades.transactions[id] = new Transaction(id, data);
             if (verify_downloaded(playerid)) {
                 func();
             }
