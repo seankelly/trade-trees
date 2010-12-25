@@ -101,14 +101,14 @@ function get_player(playerid, func) {
             trades.players[playerid].transactions = data;
             var len = data.length;
             for (var i = 0; i < len; i++) {
-                get_each_transaction(playerid, data[i]);
+                get_each_transaction(playerid, data[i], func);
             }
         },
         error: show_error
     });
 }
 
-function get_each_transaction(playerid, id) {
+function get_each_transaction(playerid, id, func) {
     // If it already exists, then don't bother.
     if (trades.transactions[id]) return;
 
