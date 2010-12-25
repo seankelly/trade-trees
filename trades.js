@@ -135,6 +135,14 @@ function choose_player(option) {
 
 function choose_transaction(option) {
     var trans_id = option.value;
+    var playerid = $("#player").value;
+
+    var f = (function() {
+        var tree = { playerid: {} };
+        var f = function() {
+        }
+        return f;
+    })();
 }
 
 function create_tree() {
