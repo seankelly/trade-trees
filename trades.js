@@ -65,6 +65,26 @@ Transaction.prototype.format = function(playerid, N) {
 // Additionally will return anything else received, such
 // as money, as an object in the array.
 Transaction.prototype.trade_return = function(team) {
+    // Search for everything TO the given team.
+    var results = [];
+    for (var playerid in this.players) {
+        var player = this.players[playerid];
+        // Loop though every transaction involving this player.
+        for (var i = 0; i < player.length; i++) {
+            if (player[i].to == team) {
+                // Check to see if it's a player.
+                if (playerid != 'other') {
+                    results.push(playerid);
+                }
+                else {
+                    // Because it needs to be handled specially.
+                    results.push({ 'info': player[i].info });
+                }
+            }
+        }
+    }
+
+    return results;
 }
 
 function show_error(request, status, exception) {
