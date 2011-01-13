@@ -184,6 +184,11 @@ function choose_transaction(option) {
     var tree = {};
     tree[playerid] = {};
     trades.tree = tree;
+
+    var trans = Transaction.load(id);
+    if (trans == undefined) // Should not happen!
+        return;
+    var results = trans.trade_return(playerid);
 }
 
 function create_tree() {
