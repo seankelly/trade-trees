@@ -68,17 +68,26 @@ Transaction.prototype.format = function(playerid, N) {
     return text;
 }
 
-// Returns an array of players the given team received.
+// Returns a list of players that were traded to the team
+// of the given player.
 // Additionally will return anything else received, such
 // as money, as an object in the array.
-Transaction.prototype.trade_return = function(team) {
-    // Search for everything TO the given team.
+Transaction.prototype.trade_return = function(playerid) {
+    // Look up the player and get his 'from' team.
+    var player_info = this.players[playerid];
+    if (!player_info) // Could not find him!
+        return;
+    // Default to the first entry in the list.
+    // It's possible there are multiple entries, such as
+    // a voided trade, but handle that elsewhere..
+    var from_team = player_info[0].from;
+    // Search for everything TO that team.
     var results = [];
     for (var playerid in this.players) {
         var player = this.players[playerid];
         // Loop though every transaction involving this player.
         for (var i = 0; i < player.length; i++) {
-            if (player[i].to == team) {
+            if (player[i].to == from_team) {
                 // Check to see if it's a player.
                 if (playerid != 'other') {
                     results.push(playerid);
