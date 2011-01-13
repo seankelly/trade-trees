@@ -185,7 +185,7 @@ function choose_transaction(option) {
     tree[playerid] = {};
     trades.tree = tree;
 
-    var trans = Transaction.load(id);
+    var trans = Transaction.load(trans_id);
     if (trans == undefined) // Should not happen!
         return;
     var results = trans.trade_return(playerid);
