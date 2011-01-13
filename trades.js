@@ -137,12 +137,11 @@ function choose_transaction(option) {
     var trans_id = option.value;
     var playerid = $("#player").val();
 
-    var f = (function() {
-        var tree = { playerid: {} };
-        var f = function() {
-        }
-        return f;
-    })();
+    // Reset the trade tree, and set the traded player
+    // as its root.
+    var tree = {};
+    tree[playerid] = {};
+    trades.tree = tree;
 }
 
 function create_tree() {
