@@ -10,7 +10,7 @@ function Transaction(id, player_list) {
     var players = {};
     for (var i = 0; i < player_list.length; i++) {
         var info = player_list[i];
-        var playerid = info.player;
+        var playerid = info.player || 'other';
         var player = players[playerid] || [];
         player.push(info);
         if (type == undefined)
