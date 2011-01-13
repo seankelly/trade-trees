@@ -62,7 +62,7 @@ Transaction.prototype.format = function(playerid, N) {
 }
 
 function show_error(request, status, exception) {
-    msgs = $("#messages");
+    var msgs = $("#messages");
     msgs.addClass("error");
     msgs.text("Error while loading " + this.url + ": " + exception.message);
 }
@@ -89,7 +89,7 @@ function initialize() {
 }
 
 function load_players() {
-    player_list = [];
+    var player_list = [];
     for (var id in trades.players) {
         var first = trades.players[id].first;
         var last = trades.players[id].last;
