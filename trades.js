@@ -23,6 +23,13 @@ function Transaction(id, player_list) {
     this.type = type;
 }
 
+Transaction.load = function(id) {
+    if (trades.transactions[id])
+        return trades.transactions[id];
+
+    return undefined;
+}
+
 // Format a transaction for a given player for display.
 Transaction.prototype.format = function(playerid, N) {
     var player = this.players[playerid];
