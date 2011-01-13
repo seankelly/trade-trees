@@ -61,6 +61,12 @@ Transaction.prototype.format = function(playerid, N) {
     return text;
 }
 
+// Returns an array of players the given team received.
+// Additionally will return anything else received, such
+// as money, as an object in the array.
+Transaction.prototype.trade_return = function(team) {
+}
+
 function show_error(request, status, exception) {
     var msgs = $("#messages");
     msgs.addClass("error");
@@ -78,7 +84,7 @@ function initialize() {
         dataType: "json",
         success: function(data, status, request) {
             trades.players = data;
-            msgs = $("#messages");
+            var msgs = $("#messages");
             // No one will see this, but that's okay.
             msgs.text("Done!");
             msgs.hide();
