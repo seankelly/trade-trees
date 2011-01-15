@@ -202,6 +202,26 @@ function clear_tree() {
  * Internal functions.
  */
 
+// Get all of the players in the passed array.
+// Will use get_player() on each player and then call
+// the passed in function.
+function get_all_players(playerids, func) {
+    var check_all_players = function() {
+        var all_found = true;
+        // Check that all of the players were fetched.
+        for (var i = 0; i < playerids.length; i++) {
+            if (!trades.players[playerids[i]])
+                all_found = false;
+        }
+        if (all_found)
+            func();
+    }
+
+    for (var i = 0; i < playerids.length; i++) {
+        get_player(playerids[i], check_all_players);
+    }
+}
+
 // Get a player and all of the transactions that involve him.
 // 'func' is the function that will be called when everything
 // has been fetched.
