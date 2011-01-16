@@ -189,6 +189,19 @@ function choose_transaction(option) {
     };
     tree.stack.push(tree[playerid]);
     trades.tree = tree;
+
+    trade_iteration();
+}
+
+function trade_iteration() {
+    // Fetch all players associated with the transaction
+    // for the references in tree.stack.
+    var tree = trades.tree;
+    var stack = trades.tree.stack;
+    while (stack.length > 0) {
+        var ref = stack.shift;
+        var T = Transaction.load(ref._tran);
+    }
 }
 
 function create_tree() {
