@@ -185,8 +185,8 @@ function choose_transaction(option) {
     var tree = {
         'stack': [],
         'root': playerid,
-        playerid: { '_tran': trans_id }
     };
+    tree[playerid] = { '_tran': trans_id };
     tree.stack.push(tree[playerid]);
     trades.tree = tree;
 
