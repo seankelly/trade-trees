@@ -182,14 +182,13 @@ function choose_transaction(option) {
 
     // Reset the trade tree, and set the traded player
     // as its root.
-    var tree = {};
-    tree[playerid] = {};
+    var tree = {
+        'stack': [],
+        'root': playerid,
+        playerid: { '_tran': trans_id }
+    };
+    tree.stack.push(tree[playerid]);
     trades.tree = tree;
-
-    var trans = Transaction.load(trans_id);
-    if (trans == undefined) // Should not happen!
-        return;
-    var results = trans.trade_return(playerid);
 }
 
 function create_tree() {
