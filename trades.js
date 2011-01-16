@@ -1,7 +1,8 @@
 var trades = {
     transactions: [],
     players:      [],
-    loaded: false
+    loaded: false,
+    tree: {}
 };
 
 function Transaction(id, player_list) {
