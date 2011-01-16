@@ -205,6 +205,12 @@ function trade_iteration() {
     }
 }
 
+// This will determine what happens to the player AFTER
+// the given transaction, such as traded again, free agent,
+// release, etc.
+function player_result(playerid, transid) {
+}
+
 function create_tree() {
 }
 
