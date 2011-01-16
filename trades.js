@@ -193,6 +193,7 @@ function choose_transaction(option) {
     trade_iteration();
 }
 
+// This runs for every iteration of the BFS (or DFS).
 function trade_iteration() {
     // Fetch all players associated with the transaction
     // for the references in tree.stack.
