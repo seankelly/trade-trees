@@ -199,7 +199,7 @@ function trade_iteration() {
     var tree = trades.tree;
     var stack = trades.tree.stack;
     while (stack.length > 0) {
-        var ref = stack.shift;
+        var ref = stack.shift();
         var T = Transaction.load(ref._tran);
     }
 }
