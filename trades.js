@@ -186,7 +186,17 @@ function choose_transaction(option) {
         'stack': [],
         'root': playerid,
     };
-    tree[playerid] = { '_tran': trans_id };
+    tree[playerid] = {
+        // This is the actual transaction involved in the trade.
+        '_transaction': trans_id,
+        // This is the player's originating transaction.
+        // Don't need to record anything for the root player, since
+        // we already know when he leaves.
+        '_start_transaction': 0,
+        // This isn't strictly necessary for the root player, but
+        // I'm putting it here for documentation purposes.
+        '_playerid': playerid
+    };
     tree.stack.push(tree[playerid]);
     trades.tree = tree;
 
@@ -201,7 +211,7 @@ function trade_iteration() {
     var stack = trades.tree.stack;
     while (stack.length > 0) {
         var ref = stack.shift();
-        var T = Transaction.load(ref._tran);
+        var T = Transaction.load(ref._transaction);
     }
 }
 
