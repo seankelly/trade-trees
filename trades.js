@@ -209,9 +209,33 @@ function trade_iteration() {
     // for the references in tree.stack.
     var tree = trades.tree;
     var stack = trades.tree.stack;
+    var new_players = [];
     while (stack.length > 0) {
         var ref = stack.shift();
         var T = Transaction.load(ref._transaction);
+        // Get the players returning to the team.
+        var p = T.trade_return(ref._playerid);
+        for (var i = 0; i < p.length; i++) {
+            // Add each player to the list of to-fetch players.
+            var id = p[i];
+            if (typeof id != 'other') {
+                new_players.push(id);
+            }
+            else {
+                id = 'other';
+            }
+            // Also add the player to the tree.
+            ref[id] = {
+                '_start_transaction': ref._transaction
+            }
+
+            // Now figure out what happened to the player.
+        }
+    }
+
+    // Finally, if there are any players to fetch, do another
+    // iteration of the trade tree.
+    if (new_players.length > 0) {
     }
 }
 
