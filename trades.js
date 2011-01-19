@@ -338,16 +338,10 @@ function show_transactions(playerid) {
         if (T.type == 'T') {
             trans_list.push({
                 id: id,
-                sort: i,
                 desc: T.format(playerid)
             });
         }
     }
-    trans_list.sort(function(a, b) {
-        if (a.sort < b.sort) return -1;
-        if (a.sort == b.sort) return 0;
-        return 1;
-    });
 
     // If there are no trades located, then change the "prompt".
     // Ideally I could just not display them in the first place, but
@@ -357,6 +351,7 @@ function show_transactions(playerid) {
         options = ['<option value="---" selected="selected" disabled="disabled">Choose a transaction</option>'];
     else
         options = ['<option value="---" selected="selected" disabled="disabled">No trades found!</option>'];
+
     var last_trans = -1;
     for (var i = 0; i < trans_list.length; i++) {
         if (trans_list[i].id == last_trans) continue;
