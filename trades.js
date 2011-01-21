@@ -243,6 +243,23 @@ function trade_iteration() {
 // the given transaction, such as traded again, free agent,
 // release, etc.
 function player_result(playerid, transid) {
+    // Find the transaction.
+    var transactions = trades.players[playerid].transactions;
+    for (var i = 0; i < transactions.length; i++) {
+        if (transid == transactions[i].id)
+            break;
+    }
+    i++;
+
+    // Uh oh, either couldn't find it or it was the last
+    // transaction available. Assume he was released.
+    if (i >= transactions.length)
+        return 'unknown';
+
+    // Now have to find when the player leaves, and return
+    // the result and the transaction id IF it's a trade.
+    for (; i < transactions.length; i++) {
+    }
 }
 
 function create_tree() {
