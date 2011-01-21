@@ -104,6 +104,23 @@ Transaction.prototype.trade_return = function(playerid) {
     return results;
 }
 
+// Returns all of the transaction types for a player in
+// the transaction. This is because there are some multi-
+// transaction events (e.g. rule 5 draftee gets returned),
+// so let the calling function sort it out.
+Transaction.prototype.get_transaction_types = function(playerid) {
+    // First find the player.
+    if (!this.players[playerid])
+        return [];
+
+    var types = []
+    for (var i = 0; i < player.length; i++) {
+        types.push(player[i].type]);
+    }
+
+    return types;
+}
+
 function show_error(request, status, exception) {
     var msgs = $("#messages");
     msgs.addClass("error");
