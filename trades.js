@@ -113,7 +113,7 @@ Transaction.prototype.get_transaction_types = function(playerid) {
     if (!this.players[playerid])
         return [];
 
-    var types = []
+    var types = [];
     for (var i = 0; i < player.length; i++) {
         types.push({
             'type': player[i].type,
