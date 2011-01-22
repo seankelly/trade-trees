@@ -292,7 +292,7 @@ function player_result(playerid, transid) {
     // Find the transaction.
     var transactions = trades.players[playerid].transactions;
     for (var i = 0; i < transactions.length; i++) {
-        if (transid == transactions[i].id)
+        if (transid == transactions[i])
             break;
     }
 
