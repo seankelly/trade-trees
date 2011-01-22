@@ -434,6 +434,37 @@ function verify_downloaded(playerid) {
     return true;
 }
 
+/*
+ * Downloading functions.
+ */
+
+// get_files does just what its name suggests, it will get
+// every file given to it and run func() only once ALL of
+// the files have been fetched.
+function get_files(files, func, error_func) {
+    if (typeof func != 'function') return;
+    if (!(files instanceof Array)) return;
+
+    var closure = (function(number) {
+        var number_loaded = 0;
+        return function(data) {
+            number_loaded++;
+            if (number_loaded < number) return;
+            func(data);
+        }
+    });
+
+    var f = closure(files.length);
+    for (var i = 0; i < files.length; i++) {
+        $.ajax({
+            url: files[i],
+            dataType: 'json',
+            success: f,
+            error: error_func
+        });
+    }
+}
+
 function show_transactions(playerid) {
     var transactions = trades.players[playerid].transactions;
 
