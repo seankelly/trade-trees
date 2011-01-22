@@ -232,7 +232,16 @@ function choose_transaction(option) {
     tree.stack.push(tree[playerid]);
     trades.tree = tree;
 
-    trade_iteration();
+    // Get all of the players in the trade.
+    // This is a bit redundant with some code in trade_iteration,
+    // but haven't yet figured out how to merge the two.
+    var p = T.trade_return(ref._playerid);
+    var players = [];
+    for (var i = 0; i < p.length; i++)
+        if (typeof p[i] != 'object')
+            players.push(p[i]);
+
+    get_all_players(players, trade_iteration);
 }
 
 // This runs for every iteration of the BFS (or DFS).
