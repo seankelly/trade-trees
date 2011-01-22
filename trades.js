@@ -444,6 +444,7 @@ function verify_downloaded(playerid) {
 function get_files(files, func, error_func) {
     if (typeof func != 'function') return;
     if (!(files instanceof Array)) return;
+    if (typeof error_func == 'undefined') error_func = show_error;
 
     var closure = (function(number) {
         var number_loaded = 0;
