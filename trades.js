@@ -284,7 +284,6 @@ function player_result(playerid, transid, team) {
         if (transid == transactions[i].id)
             break;
     }
-    i++;
 
     // Uh oh, either couldn't find it or it was the last
     // transaction available. Assume he was released.
@@ -300,7 +299,7 @@ function player_result(playerid, transid, team) {
     var check_returned = { 'Dr': true, 'Lr': true, 'Tr': true, 'Tn': true, 'Tv': true };
     var check_outright_left = { 'Fg': true, 'R': true, 'Tp': true, 'W': true, 'X': true };
     var new_trans_id;
-    for (; i < transactions.length; i++) {
+    for (i++; i < transactions.length; i++) {
         var types = transactions[i].get_transaction_types(playerid);
         for (var j = 0; j < types.length; j++) {
             var type = types[j].type,
