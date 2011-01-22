@@ -235,7 +235,7 @@ function choose_transaction(option) {
     // Get all of the players in the trade.
     // This is a bit redundant with some code in trade_iteration,
     // but haven't yet figured out how to merge the two.
-    var p = T.trade_return(ref._playerid);
+    var p = Transaction.load(trans_id).trade_return(playerid);
     var players = [];
     for (var i = 0; i < p.length; i++)
         if (typeof p[i] != 'object')
