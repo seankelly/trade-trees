@@ -258,6 +258,9 @@ function trade_iteration() {
     // iteration of the trade tree.
     if (new_players.length > 0) {
     }
+    else {
+        // All done, sweet!
+    }
 }
 
 // This will determine what happens to the player AFTER
