@@ -262,6 +262,8 @@ function trade_iteration() {
             }
 
             // Now figure out what happened to the player.
+            if (id == 'other') continue;
+            var a = player_result(id, T.id);
         }
     }
 
