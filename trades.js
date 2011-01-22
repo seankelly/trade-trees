@@ -277,7 +277,7 @@ function trade_iteration() {
 // This will determine what happens to the player AFTER
 // the given transaction, such as traded again, free agent,
 // release, etc.
-function player_result(playerid, transid, team) {
+function player_result(playerid, transid) {
     // Find the transaction.
     var transactions = trades.players[playerid].transactions;
     for (var i = 0; i < transactions.length; i++) {
@@ -289,6 +289,9 @@ function player_result(playerid, transid, team) {
     // transaction available. Assume he was released.
     if (i >= transactions.length)
         return 'unknown';
+
+    // Get the player's original team
+    var team = transactions[i].get_player_team(playerid);
 
     // Now have to find when the player leaves, and return
     // the result and the transaction id IF it's a trade.
