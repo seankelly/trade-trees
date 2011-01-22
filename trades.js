@@ -282,8 +282,49 @@ function player_result(playerid, transid, team) {
 
     // Now have to find when the player leaves, and return
     // the result and the transaction id IF it's a trade.
+    var player_left = false;
+    // This is to check for if a player is returned.
+    var possibly_left = false;
+    var check_possibly_left = { 'D': true, 'L': true, 'T': true };
+    var check_returned = { 'Dr': true, 'Lr': true, 'Tr': true, 'Tn': true, 'Tv': true };
+    var check_outright_left = { 'Fg': true, 'R': true, 'Tp': true, 'W': true, 'X': true };
+    var new_trans_id;
     for (; i < transactions.length; i++) {
+        var types = transactions[i].get_transaction_types(playerid);
+        for (var j = 0; j < types.length; j++) {
+            var type = types[j].type,
+                from = types[j].from,
+                to   = types[j].to;
+            // This is the only time the from team can be different.
+            if (possibly_left) {
+                // But the to team must be the same as the originating team.
+                if (to == team && check_returned[type]) {
+                    // Keep going, he didn't actually leave.
+                    possibly_left = false;
+                    new_trans_id = '';
+                }
+                else {
+                    return [ '', new_trans_id ];
+                }
+            }
+            else if (from == team) {
+                if (check_outright_left[type]) {
+                    return [ '', transactions[i].id ];
+                }
+                else if (check_possibly_left[type]) {
+                    possibly_left = true;
+                }
+            }
+            else {
+                // Uh oh, shouldn't be here.
+                // Either missed a case, or the data is wrong.
+                // Assume released!
+                return [ 'unknown', '' ];
+            }
+        }
     }
+
+    return possibly_left;
 }
 
 function create_tree() {
