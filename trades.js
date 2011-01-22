@@ -126,6 +126,16 @@ Transaction.prototype.get_transaction_types = function(playerid) {
     return types;
 }
 
+// Get the team for the player in the transaction.
+Transaction.prototype.get_player_team = function(playerid) {
+    if (!this.players[playerid])
+        return '';
+
+    var player = this.players[playerid];
+    if (player.length != 1) return '';
+    return player[0].from;
+}
+
 function show_error(request, status, exception) {
     var msgs = $("#messages");
     msgs.addClass("error");
