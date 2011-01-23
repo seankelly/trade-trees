@@ -452,21 +452,34 @@ function get_files(files, finish_func, each_func, error_func) {
         var number_loaded = 0;
         return function(data) {
             number_loaded++;
-            each_func(data);
+            this.each_func(data);
             if (number_loaded < number_expected) return;
-            finish_func();
+            this.finish_func();
         }
     });
 
     var f = closure(files.length);
     for (var i = 0; i < files.length; i++) {
         $.ajax({
+            context: {
+                'finish_func': finish_func,
+                'each_func': each_func,
+                'url': files[i],
+                'file': file_part(files[i])
+            },
             url: files[i],
             dataType: 'json',
             success: f,
             error: error_func
         });
     }
+}
+
+function file_part(filename) {
+    var start = filename.lastIndexOf('/');
+    var end = filename.indexOf('.', start);
+    if (end == -1) end = filename.length;
+    return filename.slice(start + 1, end);
 }
 
 function show_transactions(playerid) {
