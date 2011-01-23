@@ -337,6 +337,7 @@ function player_result(playerid, team, transid) {
                 }
                 else if (check_possibly_left[type]) {
                     possibly_left = true;
+                    new_trans_id = transactions[i];
                 }
             }
             else {
