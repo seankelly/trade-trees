@@ -392,7 +392,7 @@ function get_players(playerids, func) {
     get_files(urls,
         // This one is called at the very end.
         function() {
-            get_player_transactions(playerids, func);
+            get_player_transactions(players, func);
         },
         // Called for every player (obviously).
         function(data) {
