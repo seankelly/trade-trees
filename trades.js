@@ -404,7 +404,7 @@ function get_players(playerids, func) {
 function get_player_transactions(playerids, func) {
     // Must pass an array!
     if (!(playerids instanceof Array)) throw new TypeError();
-    var transactions = trades.players[playerid].transactions;
+
     var to_get = [];
     for (var i = 0; i < playerids.length; i++) {
         var transactions = trades.players[playerids[i]].transactions;
