@@ -205,7 +205,7 @@ function choose_player(option) {
     if (!trades.loaded) return;
 
     var playerid = option.value;
-    get_player(playerid, function() { show_transactions(playerid); });
+    get_players(playerid, function() { show_transactions(playerid); });
 }
 
 function choose_transaction(option) {
@@ -241,7 +241,7 @@ function choose_transaction(option) {
         if (typeof p[i] != 'object')
             players.push(p[i]);
 
-    get_all_players(players, trade_iteration);
+    get_players(players, trade_iteration);
 }
 
 // This runs for every iteration of the BFS (or DFS).
