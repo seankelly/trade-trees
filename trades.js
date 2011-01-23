@@ -441,10 +441,12 @@ function verify_downloaded(playerid) {
 // get_files does just what its name suggests, it will get
 // every file given to it and run func() only once ALL of
 // the files have been fetched.
-function get_files(files, func, error_func) {
-    if (typeof func != 'function') return;
+function get_files(files, finish_func, each_func, error_func) {
+    var empty_function = function() {}
     if (!(files instanceof Array)) return;
-    if (typeof error_func == 'undefined') error_func = show_error;
+    if (typeof finish_func != 'function') finish_func = empty_function;
+    if (typeof each_func != 'function') each_func = empty_function;
+    if (typeof error_func != 'function') error_func = show_error;
 
     var closure = (function(number) {
         var number_loaded = 0;
