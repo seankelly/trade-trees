@@ -443,6 +443,8 @@ function get_files(files, finish_func, each_func, error_func) {
     if (typeof each_func != 'function') each_func = empty_function;
     if (typeof error_func != 'function') error_func = show_error;
 
+    // Create a closure to get a private variable to keep
+    // track how many times it's been called.
     var closure = (function(number_expected) {
         var number_loaded = 0;
         return function(data) {
