@@ -405,17 +405,17 @@ function get_player_transactions(playerids, func) {
     // Must pass an array!
     if (!(playerids instanceof Array)) throw new TypeError();
 
-    var to_get = [];
+    var urls = [];
     for (var i = 0; i < playerids.length; i++) {
         var transactions = trades.players[playerids[i]].transactions;
         for (var j = 0; j < transactions.length; j++) {
             // Only get the ones that haven't been fetched yet.
             if (!Transaction.load(transactions[j]))
-                to_get.push(transactions[j]);
+                urls.push('json/' + transactions[j] + '.json');
         }
     }
 
-    get_files(to_get,
+    get_files(urls,
         function() {
             // Finally func gets called!
             func();
