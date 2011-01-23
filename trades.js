@@ -448,12 +448,13 @@ function get_files(files, finish_func, each_func, error_func) {
     if (typeof each_func != 'function') each_func = empty_function;
     if (typeof error_func != 'function') error_func = show_error;
 
-    var closure = (function(number) {
+    var closure = (function(number_expected) {
         var number_loaded = 0;
         return function(data) {
             number_loaded++;
-            if (number_loaded < number) return;
-            func(data);
+            each_func(data);
+            if (number_loaded < number_expected) return;
+            finish_func();
         }
     });
 
