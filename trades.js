@@ -385,25 +385,40 @@ function get_all_players(playerids, func) {
 // Get a player and all of the transactions that involve him.
 // 'func' is the function that will be called when everything
 // has been fetched.
-function get_player(playerid, func) {
-    // Check if already loaded..
-    if (verify_downloaded(playerid)) {
-        func();
-        return;
+function get_players(playerids, func) {
+    var players = [];
+    var urls = [];
+    // Allow passing an array..
+    if (playerids instanceof Array) {
+        for (var i = 0; i < playerids.length; i++) {
+            if (trades.players[playerids[i]].transactions) continue;
+            players.push(playerids[i]);
+        }
     }
+    // ..or a string instead.
+    else if (typeof playerids == 'string') {
+        if (trades.players[playerids].transactions) return;
+        players.push(playerids);
+    }
+    // Otherwise just return. Maybe throw an error?
+    else
+        return;
 
-    $.ajax({
-        url: "json/" + playerid + ".json",
-        dataType: "json",
-        success: function(data, status, request) {
-            trades.players[playerid].transactions = data;
-            var len = data.length;
-            for (var i = 0; i < len; i++) {
-                get_each_transaction(playerid, data[i], func);
-            }
+    // Make sure there's something to even fetch!
+    if (players.length == 0) return;
+    for (var i = 0; i < players.length; i++)
+        urls.push('json/' + players[i] + '.json');
+
+    get_files(urls,
+        // This one is called at the very end.
+        function() {
+            get_player_transactions(playerids, func);
         },
-        error: show_error
-    });
+        // Called for every player (obviously).
+        function(data) {
+            trades.players[this.file].transactions = data;
+        }
+    );
 }
 
 function get_each_transaction(playerid, id, func) {
