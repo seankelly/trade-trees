@@ -421,10 +421,8 @@ function get_player_transactions(playerids, func) {
             func();
         },
         function(data) {
-            for (var i = 0; i < to_get.length; i++) {
-                var id = this.file;
-                trades.transactions[id] = new Transaction(id, data);
-            }
+            var id = this.file;
+            trades.transactions[id] = new Transaction(id, data);
         }
     );
 }
