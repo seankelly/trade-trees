@@ -362,26 +362,6 @@ function clear_tree() {
  * Internal functions.
  */
 
-// Get all of the players in the passed array.
-// Will use get_player() on each player and then call
-// the passed in function.
-function get_all_players(playerids, func) {
-    var check_all_players = function() {
-        var all_found = true;
-        // Check that all of the players were fetched.
-        for (var i = 0; i < playerids.length; i++) {
-            if (!trades.players[playerids[i]])
-                all_found = false;
-        }
-        if (all_found)
-            func();
-    }
-
-    for (var i = 0; i < playerids.length; i++) {
-        get_player(playerids[i], check_all_players);
-    }
-}
-
 // Get a player and all of the transactions that involve him.
 // 'func' is the function that will be called when everything
 // has been fetched.
@@ -447,34 +427,6 @@ function get_player_transactions(playerids, func) {
             }
         }
     );
-}
-
-function get_each_transaction(playerid, id, func) {
-    // If it already exists, then don't bother.
-    if (trades.transactions[id]) return;
-
-    $.ajax({
-        url: "json/" + id + ".json",
-        dataType: "json",
-        success: function(data, status, request) {
-            trades.transactions[id] = new Transaction(id, data);
-            if (verify_downloaded(playerid)) {
-                func();
-            }
-        },
-        error: show_error
-    });
-}
-
-function verify_downloaded(playerid) {
-    var transactions = trades.players[playerid].transactions;
-
-    if (!transactions) return false;
-    for (var i = 0; i < transactions.length; i++) {
-        var id = transactions[i];
-        if (!trades.transactions[id]) return false;
-    }
-    return true;
 }
 
 /*
