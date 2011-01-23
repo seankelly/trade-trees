@@ -421,6 +421,34 @@ function get_players(playerids, func) {
     );
 }
 
+function get_player_transactions(playerids, func) {
+    // Must pass an array!
+    if (!(playerids instanceof Array)) throw new TypeError();
+    var transactions = trades.players[playerid].transactions;
+    var to_get = [];
+    for (var i = 0; i < playerids.length; i++) {
+        var transactions = trades.players[playerids[i]].transactions;
+        for (var j = 0; j < transactions.length; j++) {
+            // Only get the ones that haven't been fetched yet.
+            if (!Transaction.load(transactions[j]))
+                to_get.push(transactions[j]);
+        }
+    }
+
+    get_files(to_get,
+        function() {
+            // Finally func gets called!
+            func();
+        },
+        function(data) {
+            for (var i = 0; i < to_get.length; i++) {
+                var id = this.file;
+                trades.transactions[id] = new Transaction(id, data);
+            }
+        }
+    );
+}
+
 function get_each_transaction(playerid, id, func) {
     // If it already exists, then don't bother.
     if (trades.transactions[id]) return;
