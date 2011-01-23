@@ -302,7 +302,7 @@ function player_result(playerid, transid) {
         return 'unknown';
 
     // Get the player's original team
-    var team = transactions[i].get_player_team(playerid);
+    var team = Transaction.load(transactions[i]).get_player_team(playerid);
 
     // Now have to find when the player leaves, and return
     // the result and the transaction id IF it's a trade.
@@ -314,7 +314,8 @@ function player_result(playerid, transid) {
     var check_outright_left = { 'Fg': true, 'R': true, 'Tp': true, 'W': true, 'X': true };
     var new_trans_id;
     for (i++; i < transactions.length; i++) {
-        var types = transactions[i].get_transaction_types(playerid);
+        var T = Transaction.load(transactions[i]);
+        var types = T.get_transaction_types(playerid);
         for (var j = 0; j < types.length; j++) {
             var type = types[j].type,
                 from = types[j].from,
@@ -333,7 +334,7 @@ function player_result(playerid, transid) {
             }
             else if (from == team) {
                 if (check_outright_left[type]) {
-                    return [ '', transactions[i].id ];
+                    return [ '', T.id ];
                 }
                 else if (check_possibly_left[type]) {
                     possibly_left = true;
