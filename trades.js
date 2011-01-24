@@ -328,12 +328,12 @@ function player_result(playerid, team, transid) {
                     new_trans_id = '';
                 }
                 else {
-                    return [ '', new_trans_id ];
+                    return [ type_to_text(type), new_trans_id ];
                 }
             }
             else if (from == team) {
                 if (check_outright_left[type]) {
-                    return [ '', T.id ];
+                    return [ type_to_text(type), T.id ];
                 }
                 else if (check_possibly_left[type]) {
                     possibly_left = true;
