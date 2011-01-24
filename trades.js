@@ -404,7 +404,7 @@ function type_to_text(type) {
         'Tn':  'traded but refused to report',
         'Tp':  'added to trade',
         'Tr':  'returned after trade',
-        'Tv':  'trade voided,
+        'Tv':  'trade voided',
         'U':   'unknown',
         'Vg':  'player assigned to league control',
         'V':   'player purchased or assigned to team from league',
@@ -415,7 +415,7 @@ function type_to_text(type) {
         'X':   'expansion draft',
         'Xp':  'added as expansion pick at a later date',
         'Z':   'voluntarily retired',
-        'Zr':  'returned from voluntarily retired list',
+        'Zr':  'returned from voluntarily retired list'
     };
 
     return text[type];
