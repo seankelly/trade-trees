@@ -349,7 +349,9 @@ function player_result(playerid, team, transid) {
         }
     }
 
-    return possibly_left;
+    // Shouldn't reach the end of the function, but just in case
+    // return an unknown trade.
+    return [ 'unknown', '' ];
 }
 
 function type_to_text(type) {
