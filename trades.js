@@ -263,10 +263,7 @@ function trade_iteration() {
         for (var i = 0; i < p.length; i++) {
             // Add each player to the list of to-fetch players.
             var id = p[i];
-            if (typeof id != 'object') {
-                new_players.push(id);
-            }
-            else {
+            if (typeof id == 'object') {
                 id = 'other';
             }
             // Also add the player to the tree.
