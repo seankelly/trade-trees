@@ -472,6 +472,7 @@ function type_to_text(type) {
 
 function create_tree() {
     var tree = trades.tree[trades.tree.root];
+    trades.tree.output = tree_level(tree);
 }
 
 function tree_level(ref) {
