@@ -333,11 +333,12 @@ function player_result(playerid, team, transid) {
         if (transid == transactions[i])
             break;
     }
+    i++;
 
     // Uh oh, either couldn't find it or it was the last
     // transaction available. Assume he was released.
     if (i >= transactions.length)
-        return 'unknown';
+        return [ 'unknown', undefined ];
 
     // Now have to find when the player leaves, and return
     // the result and the transaction id IF it's a trade.
@@ -348,7 +349,7 @@ function player_result(playerid, team, transid) {
     var check_returned = { 'Dr': true, 'Lr': true, 'Tr': true, 'Tn': true, 'Tv': true };
     var check_outright_left = { 'Fg': true, 'R': true, 'Tp': true, 'W': true, 'X': true };
     var new_trans_id;
-    for (i++; i < transactions.length; i++) {
+    for (; i < transactions.length; i++) {
         var T = Transaction.load(transactions[i]);
         var types = T.get_transaction_types(playerid);
         for (var j = 0; j < types.length; j++) {
@@ -380,14 +381,14 @@ function player_result(playerid, team, transid) {
                 // Uh oh, shouldn't be here.
                 // Either missed a case, or the data is wrong.
                 // Assume released!
-                return [ 'unknown', '' ];
+                return [ 'unknown', undefined ];
             }
         }
     }
 
     // Shouldn't reach the end of the function, but just in case
     // return an unknown trade.
-    return [ 'unknown', '' ];
+    return [ 'unknown', undefined ];
 }
 
 function type_to_text(type) {
