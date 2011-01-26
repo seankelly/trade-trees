@@ -286,13 +286,19 @@ function trade_iteration() {
             // And add them.
             // The if is used only to add a reference to the
             // (new!!) stack of players to parse.
+            var num;
             if (trade_result.length > 0) {
-                new_stack.push(ref[id]);
+                // Just in case the only return is cash.
+                num = 0;
                 for (var j = 0; j < trade_result.length; j++) {
                     // Check for the other that could be returned.
-                    if (typeof trade_result[j] != 'object')
+                    if (typeof trade_result[j] != 'object') {
+                        num++;
                         players_to_get[trade_result[j]] = true;
+                    }
                 }
+                if (num > 0)
+                    new_stack.push(ref[id]);
             }
         }
     }
