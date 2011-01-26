@@ -468,6 +468,22 @@ function type_to_text(type) {
 }
 
 function create_tree() {
+    var tree = trades.tree[trades.tree.root];
+}
+
+function tree_level(ref) {
+    var hidden_property = /^_/;
+    var player_name = trades.players[ref._playerid].name;
+    var level = '<li>' + name;
+    for (var prop in ref) {
+        if (!ref.hasOwnProperty(prop)) continue;
+        if (hidden_property.match(prop)) continue;
+
+        level += '<ul>' + tree_level(ref[prop]) + '</ul>';
+    }
+    level += '</li>';
+
+    return level;
 }
 
 function clear_tree() {
