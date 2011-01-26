@@ -351,6 +351,7 @@ function player_result(playerid, team, transid) {
     var check_returned = { 'Dr': true, 'Lr': true, 'Tr': true, 'Tn': true, 'Tv': true };
     var check_outright_left = { 'Fg': true, 'R': true, 'Tp': true, 'W': true, 'X': true };
     var new_trans_id;
+    var temp_type;
     for (; i < transactions.length; i++) {
         var T = Transaction.load(transactions[i]);
         var types = T.get_transaction_types(playerid);
@@ -365,9 +366,10 @@ function player_result(playerid, team, transid) {
                     // Keep going, he didn't actually leave.
                     possibly_left = false;
                     new_trans_id = '';
+                    temp_type = '';
                 }
                 else {
-                    return [ type_to_text(type), new_trans_id ];
+                    return [ type_to_text(temp_type), new_trans_id ];
                 }
             }
             else if (from == team) {
@@ -377,6 +379,7 @@ function player_result(playerid, team, transid) {
                 else if (check_possibly_left[type]) {
                     possibly_left = true;
                     new_trans_id = transactions[i];
+                    temp_type = type;
                 }
             }
             else {
