@@ -268,7 +268,8 @@ function trade_iteration() {
             }
             // Also add the player to the tree.
             ref[id] = {
-                '_start_transaction': ref._transaction
+                '_start_transaction': ref._transaction,
+                '_playerid': id
             }
 
             // Now figure out what happened to the player.
