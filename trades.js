@@ -250,7 +250,9 @@ function trade_iteration() {
     // for the references in tree.stack.
     var tree = trades.tree;
     var stack = trades.tree.stack;
-    var new_players = [];
+    var new_stack = [];
+    // Use an object to ensure each player is only present once.
+    var players_to_get = {};
     while (stack.length > 0) {
         var ref = stack.shift();
         var T = Transaction.load(ref._transaction);
@@ -274,8 +276,31 @@ function trade_iteration() {
 
             // Now figure out what happened to the player.
             if (id == 'other') continue;
-            var a = player_result(id, team, T.id);
+
+            var result = player_result(id, team, T.id);
+            // Load the outgoing transaction.
+            var out_T = Transaction.load(result[1]);
+
+            // See if the team got anything back from trading him.
+            var trade_result = out_T.trade_return(id);
+            // And add them.
+            // The if is used only to add a reference to the
+            // (new!!) stack of players to parse.
+            if (trade_result.length > 0) {
+                new_stack.push(ref[id]);
+                for (var j = 0; j < trade_result.length; j++) {
+                    // Check for the other that could be returned.
+                    if (typeof trade_result[j] != 'object')
+                        players_to_get[trade_result[j]] = true;
+                }
+            }
         }
+    }
+
+    var new_players = [];
+    for (var p in players_to_get) {
+        if (players_to_get.hasOwnProperty(p))
+            new_players.push(p);
     }
 
     // Finally, if there are any players to fetch, do another
