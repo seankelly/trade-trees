@@ -315,7 +315,7 @@ function trade_iteration() {
         // Don't forget to set the stack!
         trades.tree.stack = new_stack;
         // And start all over with the next level.
-        get_players(players, trade_iteration);
+        get_players(new_players, trade_iteration);
     }
     else {
         // All done, sweet!
