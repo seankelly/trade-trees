@@ -303,9 +303,14 @@ function trade_iteration() {
     // Finally, if there are any players to fetch, do another
     // iteration of the trade tree.
     if (new_players.length > 0) {
+        // Don't forget to set the stack!
+        trades.tree.stack = new_stack;
+        // And start all over with the next level.
+        get_players(players, trade_iteration);
     }
     else {
         // All done, sweet!
+        create_tree();
     }
 }
 
