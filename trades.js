@@ -478,7 +478,7 @@ function create_tree() {
 function tree_level(ref) {
     var hidden_property = /^_/;
     var player_name = trades.players[ref._playerid].name;
-    var level = '<li>' + name;
+    var level = '<li>' + player_name;
     for (var prop in ref) {
         if (!ref.hasOwnProperty(prop)) continue;
         if (hidden_property.match(prop)) continue;
