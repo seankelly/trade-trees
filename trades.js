@@ -481,7 +481,7 @@ function tree_level(ref) {
     var level = '<li>' + player_name;
     for (var prop in ref) {
         if (!ref.hasOwnProperty(prop)) continue;
-        if (hidden_property.match(prop)) continue;
+        if (prop.match(hidden_property)) continue;
 
         level += '<ul>' + tree_level(ref[prop]) + '</ul>';
     }
