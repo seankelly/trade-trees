@@ -388,8 +388,13 @@ function player_result(playerid, team, transid) {
         }
     }
 
-    // Shouldn't reach the end of the function, but just in case
-    // return an unknown trade.
+    // CAN reach end of loop if his final transaction was a potential
+    // trade. Check if possibly_left is true and return if it was.
+    // If it isn't, then return the unknown.
+    if (possibly_left) {
+        return [ type_to_text(type), new_trans_id ];
+    }
+
     return [ 'unknown', undefined ];
 }
 
