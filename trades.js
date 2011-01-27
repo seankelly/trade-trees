@@ -476,6 +476,9 @@ function type_to_text(type) {
 function create_tree() {
     var tree = trades.tree[trades.tree.root];
     var output = tree_level(tree);
+    if (output.length > 0) {
+        output = '<ul>' + output + '</ul>';
+    }
     clear_tree();
     $("#trade-results").append(output);
 }
