@@ -212,6 +212,9 @@ function choose_transaction(option) {
     var trans_id = option.value;
     var playerid = $("#player").val();
 
+    // Add some loading text to provide some feedback.
+    $("#trade-results").empty().append('<p>Loading...</p>');
+
     // Reset the trade tree, and set the traded player
     // as its root.
     var tree = {
