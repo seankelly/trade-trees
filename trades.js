@@ -485,7 +485,7 @@ function tree_level(ref) {
         if (!ref.hasOwnProperty(prop)) continue;
         if (prop.match(hidden_property)) continue;
 
-        level += tree_level(ref[prop]);
+        sublevel += tree_level(ref[prop]);
     }
     sublevel += '</ul>';
     // Only add in the <ul>...</ul> stuff if there players were found.
