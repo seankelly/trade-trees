@@ -285,6 +285,7 @@ function trade_iteration() {
             var out_T = Transaction.load(result[1]);
             // And set the outgoing transaction for future reference.
             ref[id]._transaction = out_T.id;
+            ref[id]._type = result[1];
 
             // See if the team got anything back from trading him.
             var trade_result = out_T.trade_return(id);
