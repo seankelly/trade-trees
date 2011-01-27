@@ -489,6 +489,7 @@ function tree_level(ref) {
         // Skip internal properties and the non-player results.
         if (prop.substr(0, 1) == '_' || prop == 'other') continue;
 
+        num_players++;
         sublevel += tree_level(ref[prop]);
     }
     sublevel += '</ul>';
