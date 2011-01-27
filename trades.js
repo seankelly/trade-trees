@@ -478,14 +478,16 @@ function create_tree() {
 }
 
 function tree_level(ref) {
-    var hidden_property = /^_/;
     var player_name = trades.players[ref._playerid].name;
     var level = '<li>' + player_name;
     var sublevel = '<ul>';
     var num_players = 0;
     for (var prop in ref) {
+        // I'm not sure this is necessary since I haven't added
+        // anything to Object.prototype.
         if (!ref.hasOwnProperty(prop)) continue;
-        if (prop.match(hidden_property)) continue;
+        // Skip internal properties and the non-player results.
+        if (prop.substr(0, 1) == '_' || prop == 'other') continue;
 
         sublevel += tree_level(ref[prop]);
     }
