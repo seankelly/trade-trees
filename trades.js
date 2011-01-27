@@ -416,7 +416,9 @@ function create_tree() {
 }
 
 function tree_level(ref) {
-    var level = '<li>' + display_player_link(ref);
+    var level = '<li>'
+                + display_player_link(ref)
+                + ' (' + type_to_text(ref._type) + ')';
     var sublevel = '<ul>';
     var num_players = 0;
     for (var prop in ref) {
