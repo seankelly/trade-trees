@@ -230,7 +230,9 @@ function choose_transaction(option) {
         '_start_transaction': 0,
         // This isn't strictly necessary for the root player, but
         // I'm putting it here for documentation purposes.
-        '_playerid': playerid
+        '_playerid': playerid,
+        // Default to traded. That's the entire point of this page!
+        '_type': 'T'
     };
     tree.stack.push(tree[playerid]);
     trades.tree = tree;
