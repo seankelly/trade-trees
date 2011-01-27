@@ -513,7 +513,7 @@ function display_player_link(player_ref) {
     if (playerid != player_name) {
         link = 'http://www.baseball-reference.com/players/'
                + playerid.substr(0,1) + '/'
-               + playerid + '.html'
+               + playerid + '.shtml'
     }
     else {
         link = 'http://www.baseball-reference.com/pl/player_search.cgi?search='
