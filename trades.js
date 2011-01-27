@@ -479,12 +479,18 @@ function tree_level(ref) {
     var hidden_property = /^_/;
     var player_name = trades.players[ref._playerid].name;
     var level = '<li>' + player_name;
+    var sublevel = '<ul>';
+    var num_players = 0;
     for (var prop in ref) {
         if (!ref.hasOwnProperty(prop)) continue;
         if (prop.match(hidden_property)) continue;
 
-        level += '<ul>' + tree_level(ref[prop]) + '</ul>';
+        level += tree_level(ref[prop]);
     }
+    sublevel += '</ul>';
+    // Only add in the <ul>...</ul> stuff if there players were found.
+    if (num_players > 0)
+        level += sublevel;
     level += '</li>';
 
     return level;
