@@ -626,7 +626,7 @@ function get_files(files, finish_func, each_func, error_func) {
 
 function file_part(filename) {
     var start = filename.lastIndexOf('/');
-    var end = filename.indexOf('.', start);
+    var end = filename.lastIndexOf('.');
     if (end == -1) end = filename.length;
     return filename.slice(start + 1, end);
 }
