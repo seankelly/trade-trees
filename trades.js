@@ -281,7 +281,7 @@ function trade_iteration() {
             var result = player_result(id, team, T.id);
             // Load the outgoing transaction.
             // If there's something to load.
-            if (typeof result[1] == 'undefined') continue;
+            if (typeof result[0] == 'undefined') continue;
             var out_T = Transaction.load(result[1]);
             // And set the outgoing transaction for future reference.
             ref[id]._transaction = out_T.id;
@@ -343,7 +343,7 @@ function player_result(playerid, team, transid) {
     // Uh oh, either couldn't find it or it was the last
     // transaction available. Assume he was released.
     if (i >= transactions.length)
-        return [ 'unknown', undefined ];
+        return [ undefined, 'U' ];
 
     // Now have to find when the player leaves, and return
     // the result and the transaction id IF it's a trade.
@@ -372,12 +372,12 @@ function player_result(playerid, team, transid) {
                     temp_type = '';
                 }
                 else {
-                    return [ type_to_text(temp_type), new_trans_id ];
+                    return [ new_trans_id, temp_type ];
                 }
             }
             else if (from == team) {
                 if (check_outright_left[type]) {
-                    return [ type_to_text(type), T.id ];
+                    return [ T.id, type ];
                 }
                 else if (check_possibly_left[type]) {
                     possibly_left = true;
@@ -389,7 +389,7 @@ function player_result(playerid, team, transid) {
                 // Uh oh, shouldn't be here.
                 // Either missed a case, or the data is wrong.
                 // Assume released!
-                return [ 'unknown', undefined ];
+                return [ undefined, 'U' ];
             }
         }
     }
@@ -398,10 +398,10 @@ function player_result(playerid, team, transid) {
     // trade. Check if possibly_left is true and return if it was.
     // If it isn't, then return the unknown.
     if (possibly_left) {
-        return [ type_to_text(type), new_trans_id ];
+        return [ new_trans_id, type ];
     }
 
-    return [ 'unknown', undefined ];
+    return [ undefined, 'U' ];
 }
 
 function type_to_text(type) {
