@@ -504,7 +504,7 @@ function tree_level(ref) {
 }
 
 function display_player_link(player_ref) {
-    var playerid = ref._playerid;
+    var playerid = player_ref._playerid;
     var player_name = trades.players[playerid].name;
     var link;
 
