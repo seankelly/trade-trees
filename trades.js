@@ -481,8 +481,7 @@ function create_tree() {
 }
 
 function tree_level(ref) {
-    var player_name = trades.players[ref._playerid].name;
-    var level = '<li>' + player_name;
+    var level = '<li>' + display_player_link(ref);
     var sublevel = '<ul>';
     var num_players = 0;
     for (var prop in ref) {
@@ -502,6 +501,26 @@ function tree_level(ref) {
     level += '</li>';
 
     return level;
+}
+
+function display_player_link(player_ref) {
+    var playerid = ref._playerid;
+    var player_name = trades.players[playerid].name;
+    var link;
+
+    // Only linkify if they have an id. If they don't, then
+    // use B-R's search page instead.
+    if (playerid != player_name) {
+        link = 'http://www.baseball-reference.com/players/'
+               + playerid.substr(0,1) + '/'
+               + playerid + '.html'
+    }
+    else {
+        link = 'http://www.baseball-reference.com/pl/player_search.cgi?search='
+               + playerid.toLowerCase().replace(' ', '+');
+    }
+
+    return '<a href="' + link + '">' + player_name + '</a>';
 }
 
 function clear_tree() {
