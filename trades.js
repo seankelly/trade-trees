@@ -690,5 +690,5 @@ function type_to_text(type) {
         'Zr':  'returned from voluntarily retired list'
     };
 
-    return text[type];
+    return text[type] || 'unknown';
 }
