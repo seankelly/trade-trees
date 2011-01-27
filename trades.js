@@ -472,7 +472,9 @@ function type_to_text(type) {
 
 function create_tree() {
     var tree = trades.tree[trades.tree.root];
-    trades.tree.output = tree_level(tree);
+    var output = tree_level(tree);
+    clear_tree();
+    $("#trade-results").append(output);
 }
 
 function tree_level(ref) {
