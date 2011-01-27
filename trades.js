@@ -535,7 +535,11 @@ function get_players(playerids, func) {
         return;
 
     // Make sure there's something to even fetch!
-    if (players.length == 0) return;
+    if (players.length == 0) {
+        // But I'm expecting the function to be called, so do that now.
+        func();
+        return;
+    }
     for (var i = 0; i < players.length; i++)
         urls.push('json/' + players[i] + '.json');
 
