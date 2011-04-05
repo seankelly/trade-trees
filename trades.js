@@ -136,6 +136,18 @@ Transaction.prototype.get_player_team = function(playerid) {
     return player[0].from;
 }
 
+function fentry(fname, args) {
+    if (!console || !console.log) return;
+    var log = "==> " + fname;
+    if (args && args.length > 0) {
+        var a = [];
+        for (var i = 0; i < args.length; i++)
+            a.push(args[i]);
+        log += ': ' + a.join(', ');
+    }
+    console.log(log);
+}
+
 function show_error(request, status, exception) {
     var msgs = $("#messages");
     msgs.addClass("error");
