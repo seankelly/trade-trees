@@ -263,6 +263,7 @@ function choose_transaction(option) {
 
 // This runs for every iteration of the BFS (or DFS).
 function trade_iteration() {
+    fentry('trade_iteration');
     // Fetch all players associated with the transaction
     // for the references in tree.stack.
     var tree = trades.tree;
@@ -347,6 +348,7 @@ function trade_iteration() {
 // the given transaction, such as traded again, free agent,
 // release, etc.
 function player_result(playerid, team, transid) {
+    fentry('player_result');
     // Find the transaction.
     var transactions = trades.players[playerid].transactions;
     for (var i = 0; i < transactions.length; i++) {
