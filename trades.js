@@ -348,7 +348,7 @@ function trade_iteration() {
 // the given transaction, such as traded again, free agent,
 // release, etc.
 function player_result(playerid, team, transid) {
-    fentry('player_result');
+    fentry('player_result', arguments);
     // Find the transaction.
     var transactions = trades.players[playerid].transactions;
     for (var i = 0; i < transactions.length; i++) {
