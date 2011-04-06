@@ -488,6 +488,7 @@ function clear_tree() {
 // 'func' is the function that will be called when everything
 // has been fetched.
 function get_players(playerids, func) {
+    fentry('get_players', arguments);
     var players = [];
     var urls = [];
     // Allow passing an array..
