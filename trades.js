@@ -564,9 +564,9 @@ function get_player_transactions(playerids, func) {
 function get_files(files, finish_func, each_func, error_func) {
     var empty_function = function() {}
     if (!(files instanceof Array)) return;
+    if (typeof finish_func != 'function') finish_func = empty_function;
     // If there's nothing to fetch, then just call the final function.
     if (files.length == 0) finish_func();
-    if (typeof finish_func != 'function') finish_func = empty_function;
     if (typeof each_func != 'function') each_func = empty_function;
     if (typeof error_func != 'function') error_func = show_error;
 
