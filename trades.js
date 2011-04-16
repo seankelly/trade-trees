@@ -500,12 +500,16 @@ function get_players(playerids, func) {
     }
     // ..or a string instead.
     else if (typeof playerids == 'string') {
-        if (trades.players[playerids].transactions) return;
+        if (trades.players[playerids].transactions) {
+            func();
+            return;
+        }
         players.push(playerids);
     }
     // Otherwise just return. Maybe throw an error?
-    else
+    else {
         return;
+    }
 
     // Make sure there's something to even fetch!
     if (players.length == 0) {
