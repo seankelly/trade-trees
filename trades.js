@@ -88,7 +88,7 @@ Transaction.prototype.trade_return = function(playerid) {
         var player = this.players[playerid];
         // Loop though every transaction involving this player.
         for (var i = 0; i < player.length; i++) {
-            if (player[i].to == from_team) {
+            if (is_same_team(player[i].to, from_team)) {
                 // Check to see if it's a player.
                 if (playerid != 'other') {
                     results.push(playerid);
