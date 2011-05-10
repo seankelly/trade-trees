@@ -456,7 +456,7 @@ function player_result(playerid, team, transid) {
             // This is the only time the from team can be different.
             if (possibly_left) {
                 // But the to team must be the same as the originating team.
-                if (to == team && check_returned[type]) {
+                if (is_same_team(team, to) && check_returned[type]) {
                     // Keep going, he didn't actually leave.
                     possibly_left = false;
                     new_trans_id = '';
@@ -466,7 +466,7 @@ function player_result(playerid, team, transid) {
                     return [ new_trans_id, temp_type ];
                 }
             }
-            else if (from == team) {
+            else if (is_same_team(team, from)) {
                 if (check_outright_left[type]) {
                     return [ T.id, type ];
                 }
