@@ -441,8 +441,8 @@ function player_result(playerid, team, transid) {
     var player_left = false;
     // This is to check for if a player is returned.
     var possibly_left = false;
-    var check_possibly_left = { 'D': true, 'L': true, 'T': true };
-    var check_returned = { 'Dr': true, 'Lr': true, 'Tr': true, 'Tn': true, 'Tv': true };
+    var check_possibly_left = { 'D': true, 'L': true, 'P': true, 'T': true };
+    var check_returned = { 'Dr': true, 'Lr': true, 'Pv': true, 'Tr': true, 'Tn': true, 'Tv': true };
     var check_outright_left = { 'Fg': true, 'R': true, 'Tp': true, 'W': true, 'X': true };
     var new_trans_id;
     var temp_type;
