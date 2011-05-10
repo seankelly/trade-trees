@@ -136,6 +136,80 @@ Transaction.prototype.get_player_team = function(playerid) {
     return player[0].from;
 }
 
+function is_same_team(from, to) {
+    var franchises = {
+        // Angels
+        'LAA': 'ANA', 'CAL': 'ANA', 'ANA': 'ANA',
+        // Braves
+        'BS1': 'ATL', 'BSN': 'ATL', 'MLN': 'ATL', 'ATL': 'ATL',
+        // Diamondbacks
+        'ARI': 'ARI',
+        // Orioles
+        'MLA': 'BAL', 'SLA': 'BAL',
+        // Red Sox
+        'BOS': 'BOS',
+        // Cubs
+        'CH1': 'CHN', 'CHN': 'CHN',
+        // White Sox
+        'CHA': 'CHA',
+        // Reds
+        'CN2': 'CIN', 'CIN': 'CIN',
+        // Indians
+        'CLE': 'CLE',
+        // Rockies
+        'COL': 'COL',
+        // Tigers
+        'DET': 'DET',
+        // Marlins
+        'FLO': 'FLO',
+        // Astros
+        'HOU': 'HOU',
+        // Royals
+        'KCA': 'KCA',
+        // Dodgers
+        'BR3': 'LAN', 'BRO': 'LAN', 'LAN': 'LAN',
+        // Brewers
+        'SE1': 'MIL', 'MIL': 'MIL',
+        // Twins
+        'WS1': 'MIN', 'MIN': 'MIN',
+        // Mets
+        'NYN': 'NYN',
+        // Yankees
+        'BLA': 'NYA',
+        // Athletics
+        'PHA': 'OAK', 'KC1': 'OAK', 'OAK': 'OAK',
+        // Phillies
+        'PHI': 'PHI',
+        // Pirates
+        'PT1': 'PIT', 'PIT': 'PIT',
+        // Padres
+        'SDN': 'SDN',
+        // Giants
+        'NY1': 'SFN', 'SFN': 'SFN',
+        // Mariners
+        'SEA': 'SEA',
+        // Cardinals
+        'SL4': 'STN',
+        // Rays
+        'TBA': 'TBA',
+        // Rangers
+        'WS2': 'TEX', 'TEX': 'TEX',
+        // Blue Jays
+        'TOR': 'TOR',
+        // Nationals
+        'MON': 'WAS', 'WAS': 'WAS',
+    };
+
+    // Just in case I miss adding a franchise to the table above.
+    if (from == to)
+        return true;
+
+    if (from in franchise && to in franchise
+        && franchise[from] == franchise[to])
+        return true;
+    return false;
+}
+
 function fentry(fname, args) {
     if (!console || !console.log) return;
     var log = "==> " + fname;
