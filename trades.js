@@ -204,8 +204,8 @@ function is_same_team(from, to) {
     if (from == to)
         return true;
 
-    if (from in franchise && to in franchise
-        && franchise[from] == franchise[to])
+    if (from in franchises && to in franchises
+        && franchises[from] == franchises[to])
         return true;
     return false;
 }
