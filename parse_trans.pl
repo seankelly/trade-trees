@@ -24,6 +24,18 @@ $row = $csv->getline($bdb_master);
 die "BDB Master file not detected.\n" unless @{ $row } == 33;
 do {
     @r = @{ $row };
+    # Column 29 = retroid
+    # Column 33 = bbrefid
+    # Column 16,17 = first and last name
+    # Column 19 = given name
+    my ($retroid, $bbrefid, $first, $last, $given) = @r[29, 33, 16, 17, 19];
+    $players{$retroid} = {
+        first   => $first,
+        last    => $last,
+        given   => $given,
+        bbrefid => $bbrefid,
+        retroid => $retroid,
+    };
 } while ($row = $csv->getline($bdb_master));
 
 # Now load the transactions list from Retrosheet.
