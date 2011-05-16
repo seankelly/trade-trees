@@ -32,12 +32,14 @@ die "Retrosheet transactions fine not detected.\n" unless @{ $row } == 16;
 do {
     @r = @{ $row };
     my ($y, $m, $d);
+    # Primary date.
     if (length($r[0]) > 0) {
         ($y, $m, $d) = $r[0] =~ /^(\d{4})(\d{2})(\d{2})/;
         $d = "01" if $d eq "00";
         $m = "01" if $m eq "00";
         $r[0] = "$y-$m-$d";
     }
+    # Secondary date.
     if (length($r[3]) > 0) {
         ($y, $m, $d) = $r[3] =~ /^(\d{4})(\d{2})(\d{2})/;
         $d = "01" if $d eq "00";
@@ -45,6 +47,9 @@ do {
         $r[3] = "$y-$m-$d";
     }
 
+    # Fields 2 or 4 are '@' if the primary date or secondary date,
+    # respectively, are approximate. Convert the machine unfriendly @ to
+    # the machine friendly 'true'.
     $r[2] = "true" if $r[2] eq "@";
     $r[4] = "true" if $r[4] eq "@";
 
