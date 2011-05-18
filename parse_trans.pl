@@ -119,8 +119,6 @@ do {
     else {
         push @{ $transactions{$id} }, $trade_info;
     }
-    #@r = ($r[5], @r[0..4,6], "", @r[7..$#r]);
-    #push @rows, \@r;
 } while ($row = $csv->getline($retro_transactions));
 close $retro_transactions;
 
