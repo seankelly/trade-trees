@@ -11,6 +11,7 @@ die "Usage: $0 tran.txt Master.txt\n" unless @ARGV == 2;
 my $csv = Text::CSV->new;
 my $json = JSON::Any->new;
 my %players;
+my %transactions;
 
 open my $retro_transactions, '<', $ARGV[0] or die "Could not open $ARGV[0]: $!";
 open my $bdb_master, '<', $ARGV[1] or die "Could not open $ARGV[1]: $!";
@@ -28,15 +29,16 @@ do {
     # Column 33 = bbrefid
     # Column 16,17 = first and last name
     # Column 19 = given name
-    my ($retroid, $bbrefid, $first, $last, $given) = @r[29, 33, 16, 17, 19];
+    my ($retroid, $bbrefid, $first, $last) = @r[29, 33, 16, 17];
     $players{$retroid} = {
         first   => $first,
         last    => $last,
-        given   => $given,
+        given   => $first . ' ' . $last,
         bbrefid => $bbrefid,
         retroid => $retroid,
     };
 } while ($row = $csv->getline($bdb_master));
+close $bdb_master;
 
 # Now load the transactions list from Retrosheet.
 $row = $csv->getline($retro_transactions);
@@ -65,11 +67,63 @@ do {
     $r[2] = "true" if $r[2] eq "@";
     $r[4] = "true" if $r[4] eq "@";
 
+    $r[7] =~ s/\s+//g;
+
+    # Get the Baseball Reference ID.
+    # It's easier to link to the B-R page to allow quick
+    # cross-referencing the trade tree.
+    my ($bbrefid, $given, $first, $last);
+    if ($players{$r[6]}) {
+        $bbrefid = $players{$r[6]}->{bbrefid};
+        $given   = $players{$r[6]}->{given};
+        $first   = $players{$r[6]}->{first};
+        $last    = $players{$r[6]}->{last};
+    }
+    else {
+        $bbrefid = $r[6];
+        $given   = $r[6];
+        $first   = '';
+        $last    = '';
+    }
+
     # Rearrange columns some and insert a new one for bbrefid.
-    @r = ($r[5], @r[0..4,6], "", @r[7..$#r]);
+    # Column 0: Primary date.
+    #  1: Time
+    #  2: Approximate indicator for primary date.
+    #  3: Secondary date
+    #  3: Approximate indicator for secondary date.
+    #  5: Transaction ID
+    #  6: Retrosheet ID
+    #  7: Transaction type
+    #  8: From team
+    #  9: From league
+    # 10: To team
+    # 11: To league
+    # 12: Draft type
+    # 13: Draft round
+    # 14: Pick number
+    # 15: Info
+    my $id = $r[5];
+    my $trade_info = {
+        date   => $r[0],
+        type   => $r[7],
+        player => $bbrefid,
+        from   => $r[8],
+        to     => $r[10],
+        info   => $r[15],
+    };
 
-#    push @rows, \@r;
+    if (!$transactions{$id}) {
+        $transactions{$id} = [ $trade_info ];
+    }
+    else {
+        push @{ $transactions{$id} }, $trade_info;
+    }
+    #@r = ($r[5], @r[0..4,6], "", @r[7..$#r]);
+    #push @rows, \@r;
 } while ($row = $csv->getline($retro_transactions));
-
 close $retro_transactions;
-close $bdb_master;
+
+open my $file, '>', 'transactions.json' or die "Couldn't open transactions.json: $!";
+print $file $json->to_json(\%transactions);
+close $file;
