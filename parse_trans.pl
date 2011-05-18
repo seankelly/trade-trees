@@ -72,19 +72,9 @@ do {
     # Get the Baseball Reference ID.
     # It's easier to link to the B-R page to allow quick
     # cross-referencing the trade tree.
-    my ($bbrefid, $given, $first, $last);
-    if ($players{$r[6]}) {
-        $bbrefid = $players{$r[6]}->{bbrefid};
-        $given   = $players{$r[6]}->{given};
-        $first   = $players{$r[6]}->{first};
-        $last    = $players{$r[6]}->{last};
-    }
-    else {
-        $bbrefid = $r[6];
-        $given   = $r[6];
-        $first   = '';
-        $last    = '';
-    }
+    my $bbrefid = $players{$r[6]}
+                ? $players{$r[6]}->{bbrefid}
+                : $r[6];
 
     # Rearrange columns some and insert a new one for bbrefid.
     # Column 0: Primary date.
