@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use 5.010;
 
-use JSON::Any;
+use JSON;
 use Text::CSV;
 
 die "Usage: $0 tran.txt Master.txt\n" unless @ARGV == 2;
