@@ -8,7 +8,7 @@ use Text::CSV;
 
 die "Usage: $0 tran.txt Master.txt\n" unless @ARGV == 2;
 
-my $csv = Text::CSV->new;
+my $csv = Text::CSV->new({ binary => 1 });
 my $json = JSON->new;
 my %players;
 my %transactions;
@@ -29,15 +29,18 @@ do {
     # Column 33 = bbrefid
     # Column 16,17 = first and last name
     # Column 19 = given name
-    my ($retroid, $bbrefid, $first, $last) = @r[29, 33, 16, 17];
-    $players{$retroid} = {
-        first   => $first,
-        last    => $last,
-        given   => $first . ' ' . $last,
-        bbrefid => $bbrefid,
-        retroid => $retroid,
-    };
+    my ($retroid, $bbrefid, $first, $last) = @r[30, 32, 16, 17];
+    if (length($retroid) > 0) {
+        $players{$retroid} = {
+            first   => $first,
+            last    => $last,
+            given   => $first . ' ' . $last,
+            bbrefid => $bbrefid,
+            retroid => $retroid,
+        };
+    }
 } while ($row = $csv->getline($bdb_master));
+$csv->eof or $csv->error_diag();
 close $bdb_master;
 
 # Now load the transactions list from Retrosheet.
