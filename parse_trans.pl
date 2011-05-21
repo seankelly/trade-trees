@@ -11,6 +11,7 @@ die "Usage: $0 tran.txt Master.txt\n" unless @ARGV == 2;
 my $csv = Text::CSV->new({ binary => 1 });
 my $json = JSON->new;
 my %players;
+my %seen_players;
 my %transactions;
 
 open my $retro_transactions, '<', $ARGV[0] or die "Could not open $ARGV[0]: $!";
@@ -34,7 +35,6 @@ do {
         $players{$retroid} = {
             first   => $first,
             last    => $last,
-            given   => $first . ' ' . $last,
             bbrefid => $bbrefid,
             retroid => $retroid,
         };
@@ -75,9 +75,18 @@ do {
     # Get the Baseball Reference ID.
     # It's easier to link to the B-R page to allow quick
     # cross-referencing the trade tree.
-    my $bbrefid = $players{$r[6]}
-                ? $players{$r[6]}->{bbrefid}
-                : $r[6];
+    my ($bbrefid, $first, $last, $name);
+    if ($players{$r[6]}) {
+        $bbrefid = $players{$r[6]}->{bbrefid};
+        $first = $players{$r[6]}->{first};
+        $last = $players{$r[6]}->{last};
+        $name = $first . ' ' . $last;
+    }
+    else {
+        $bbrefid = $r[6];
+        $first = $last = '';
+        $name = $r[6];
+    }
 
     # Rearrange columns some and insert a new one for bbrefid.
     # Column 0: Primary date.
@@ -97,19 +106,23 @@ do {
     # 14: Pick number
     # 15: Info
     my $id = $r[5];
+    my $type = $r[7];
     my $trade_info = {
         date   => $r[0],
-        type   => $r[7],
+        type   => $type,
         player => $bbrefid,
         from   => $r[8],
         to     => $r[10],
         info   => $r[15],
     };
 
-    if (!$players{$bbrefid}) {
-        $players{$bbrefid} = [ ];
+    if (!$seen_players{$bbrefid} && length($bbrefid) > 0) {
+        $seen_players{$bbrefid} = {
+            first => $first,
+            last  => $last,
+            name  => $name,
+        }
     }
-    push @{ $players{$bbrefid} }, $id;
 
     if (!$transactions{$id}) {
         $transactions{$id} = [ ];
@@ -150,3 +163,9 @@ while ($min < @transactions) {
         $max += 1000;
     }
 }
+
+# Dump the players.
+open my $file, '>', "players.json" or die "Couldn't open players.json: $!";
+print $file to_json(\%seen_players);
+#print $file to_json(\%players);
+close $file;
