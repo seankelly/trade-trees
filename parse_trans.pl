@@ -9,7 +9,7 @@ use Text::CSV;
 die "Usage: $0 tran.txt Master.txt\n" unless @ARGV == 2;
 
 my $csv = Text::CSV->new;
-my $json = JSON::Any->new;
+my $json = JSON->new;
 my %players;
 my %transactions;
 
@@ -112,6 +112,35 @@ do {
 } while ($row = $csv->getline($retro_transactions));
 close $retro_transactions;
 
-open my $file, '>', 'transactions.json' or die "Couldn't open transactions.json: $!";
-print $file $json->to_json(\%transactions);
-close $file;
+# Convert into a single array, filling any gaps.
+my @transactions;
+my $expected_id = 0;
+for my $id (sort keys %transactions) {
+    push @transactions, undef while $expected_id++ < $id;
+    push @transactions, $transactions{$id};
+}
+
+# Shard %transactions into files of 5000 transactions each.
+my ($min, $max) = (0, 999);
+my ($size, $limit, $shard) = (0, 512*1024, 0);
+while ($min < @transactions) {
+    my @tran = @transactions[$min..$max];
+    $size = length(to_json(\@tran));
+    if ($size > $limit || $max == @transactions) {
+        # Dump $min..$max-1000
+        my $top = $max - 1000;
+        $top = $max if $max == @transactions;
+        open my $file, '>', "transactions_$shard.json" or die "Couldn't open transactions_$shard.json: $!";
+        @tran = @transactions[$min..$top];
+        print $file to_json(\@tran);
+        #warn \@transactions[$min..($max-1000)];
+        close $file;
+        $shard++;
+        $min = $max + 1;
+        $max = $max + 1000;
+        $max = @transactions if $max > @transactions;
+    }
+    else {
+        $max += 1000;
+    }
+}
