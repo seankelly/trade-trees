@@ -103,12 +103,15 @@ do {
         info   => $r[15],
     };
 
+    if (!$players{$bbrefid}) {
+        $players{$bbrefid} = [ ];
+    }
+    push @{ $players{$bbrefid} }, $id;
+
     if (!$transactions{$id}) {
-        $transactions{$id} = [ $trade_info ];
+        $transactions{$id} = [ ];
     }
-    else {
-        push @{ $transactions{$id} }, $trade_info;
-    }
+    push @{ $transactions{$id} }, $trade_info;
 } while ($row = $csv->getline($retro_transactions));
 close $retro_transactions;
 
