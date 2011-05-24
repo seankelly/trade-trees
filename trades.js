@@ -236,10 +236,11 @@ function initialize() {
     // of a teeeny bit of lag for each load. With caching, all should be
     // just fine.
     if (trades.temp_trans) {
-        var trans = trades.transactions;
+        var trans = [];
         var temp = trades.temp_trans;
         for (var i = 0; i < temp.length; i++)
             trans = trans.concat(temp[i]);
+        trades.transactions = trans;
     }
     $.ajax({
         url: 'json/players.json',
