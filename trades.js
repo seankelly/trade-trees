@@ -237,7 +237,7 @@ function initialize() {
     // just fine.
     if (trades.temp_trans) {
         for (var i = 0; i < trades.temp_trans.length; i++)
-            trades.transactions.concat(trades.temp_trans[i];
+            trades.transactions.concat(trades.temp_trans[i]);
     }
     $.ajax({
         url: 'json/players.json',
