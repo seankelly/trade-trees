@@ -235,6 +235,10 @@ function initialize() {
     // file separately. This will improve loading times at the expense
     // of a teeeny bit of lag for each load. With caching, all should be
     // just fine.
+    if (trades.temp_trans) {
+        for (var i = 0; i < trades.temp_trans.length; i++)
+            trades.transactions.concat(trades.temp_trans[i];
+    }
     $.ajax({
         url: 'json/players.json',
         dataType: "json",
