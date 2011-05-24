@@ -238,8 +238,8 @@ function initialize() {
     if (trades.temp_trans) {
         var trans = trades.transactions;
         var temp = trades.temp_trans;
-        for (var i = 0; i < temp_trans.length; i++)
-            trans = trans.concat(temp_trans[i]);
+        for (var i = 0; i < temp.length; i++)
+            trans = trans.concat(temp[i]);
     }
     $.ajax({
         url: 'json/players.json',
