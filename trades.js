@@ -1,9 +1,10 @@
-var trades = {
-    transactions: [],
-    players:      [],
-    loaded: false,
-    tree: {}
-};
+if (!trades) {
+    var trades = {};
+}
+trades.transactions = [];
+trades.players = [];
+trades.loaded = false;
+trades.tree = {};
 
 function Transaction(id, player_list) {
     this.id = id;
