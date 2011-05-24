@@ -149,9 +149,11 @@ while ($min < @transactions) {
         # Dump $min..$max-1000
         my $top = $max - 1000;
         $top = $max if $max == @transactions;
-        open my $file, '>', "transactions_$shard.json" or die "Couldn't open transactions_$shard.json: $!";
+        open my $file, '>', "transactions_$shard.js" or die "Couldn't open transactions_$shard.js: $!";
         @tran = @transactions[$min..$top];
-        print $file to_json(\@tran);
+        print $file "if (!trades) { trades = { 'temp_trans': [] }; }\n",
+                    "trades.temp_trans[$shard] = ",
+                    to_json(\@tran), ';';
         #warn \@transactions[$min..($max-1000)];
         close $file;
         $shard++;
