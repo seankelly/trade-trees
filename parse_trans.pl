@@ -151,7 +151,7 @@ while ($min < @transactions) {
         $top = $max if $max == @transactions;
         open my $file, '>', "transactions_$shard.js" or die "Couldn't open transactions_$shard.js: $!";
         @tran = @transactions[$min..$top];
-        print $file "if (!trades) var trades;\n",
+        print $file "if (!trades) var trades = {};\n",
                     "if (!trades.temp_trans) trades.temp_trans = [];\n",
                     "trades.temp_trans[$shard] = ",
                     to_json(\@tran), ';';
