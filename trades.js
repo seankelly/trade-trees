@@ -304,7 +304,7 @@ function load_transactions() {
     var l = trans.length;
     for (var id = 0; id < l; id++) {
         if (trans[id] == null) continue;
-        trans[id] = new Transactions(id, trans[id]);
+        trans[id] = new Transaction(id, trans[id]);
     }
 }
 
