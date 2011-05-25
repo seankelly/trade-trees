@@ -155,7 +155,6 @@ while ($min < @transactions) {
                     "if (!trades.temp_trans) trades.temp_trans = [];\n",
                     "trades.temp_trans[$shard] = ",
                     to_json(\@tran), ';';
-        #warn \@transactions[$min..($max-1000)];
         close $file;
         $shard++;
         $min = $max + 1;
