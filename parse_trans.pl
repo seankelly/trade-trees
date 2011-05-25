@@ -134,7 +134,8 @@ close $retro_transactions;
 # Convert into a single array, filling any gaps.
 my @transactions;
 my $expected_id = 0;
-for my $id (sort keys %transactions) {
+my @ids = sort { $a <=> $b } map { int($_) } keys %transactions;
+for my $id (@ids) {
     push @transactions, undef while $expected_id++ < $id;
     push @transactions, $transactions{$id};
 }
