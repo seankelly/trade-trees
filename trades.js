@@ -1,8 +1,6 @@
 if (!trades) {
     var trades = {};
 }
-trades.transactions = [];
-trades.players = [];
 trades.loaded = false;
 trades.tree = {};
 
