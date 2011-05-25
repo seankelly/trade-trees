@@ -239,6 +239,7 @@ function initialize() {
         for (var i = 0; i < temp.length; i++)
             trans = trans.concat(temp[i]);
         trades.transactions = trans;
+        load_transactions();
     }
     if (trades.players) {
         var msgs = $("#messages");
@@ -296,6 +297,15 @@ function load_players() {
     trans.append('<option value="---" selected="selected" disabled="disabled">Select a player above</option>');
 
     trades.loaded = true;
+}
+
+function load_transactions() {
+    var trans = trades.transactions;
+    var l = trans.length;
+    for (var id = 0; id < l; i++) {
+        if (trans[id] == null) continue;
+        trans[id] = new Transactions(id, trans[id]);
+    }
 }
 
 /*
