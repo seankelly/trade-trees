@@ -242,19 +242,24 @@ function initialize() {
             trans = trans.concat(temp[i]);
         trades.transactions = trans;
     }
-    $.ajax({
-        url: 'json/players.json',
-        dataType: "json",
-        success: function(data, status, request) {
-            trades.players = data;
-            var msgs = $("#messages");
-            // No one will see this, but that's okay.
-            msgs.text("Done!");
-            msgs.hide();
-            load_players();
-        },
-        error: show_error
-    });
+    if (!trades.players) {
+        $.ajax({
+            url: 'json/players.json',
+            dataType: "json",
+            success: function(data, status, request) {
+                trades.players = data;
+                var msgs = $("#messages");
+                // No one will see this, but that's okay.
+                msgs.text("Done!");
+                msgs.hide();
+                load_players();
+            },
+            error: show_error
+        });
+    }
+    else {
+        load_players();
+    }
 }
 
 function load_players() {
