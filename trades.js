@@ -302,7 +302,7 @@ function load_players() {
 function load_transactions() {
     var trans = trades.transactions;
     var l = trans.length;
-    for (var id = 0; id < l; i++) {
+    for (var id = 0; id < l; id++) {
         if (trans[id] == null) continue;
         trans[id] = new Transactions(id, trans[id]);
     }
