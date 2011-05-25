@@ -240,7 +240,14 @@ function initialize() {
             trans = trans.concat(temp[i]);
         trades.transactions = trans;
     }
-    if (!trades.players) {
+    if (trades.players) {
+        var msgs = $("#messages");
+        // No one will see this, but that's okay.
+        msgs.text("Done!");
+        msgs.hide();
+        load_players();
+    }
+    else {
         $.ajax({
             url: 'json/players.json',
             dataType: "json",
@@ -254,9 +261,6 @@ function initialize() {
             },
             error: show_error
         });
-    }
-    else {
-        load_players();
     }
 }
 
