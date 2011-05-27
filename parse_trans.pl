@@ -149,7 +149,7 @@ while ($min < @transactions) {
     if ($size > $limit || $max == @transactions) {
         # Dump $min..$max-1000
         my $top = $max - 1000;
-        $top = $max if $max == @transactions;
+        $top = @transactions - 1 if $max >= @transactions;
         open my $file, '>', "transactions_$shard.js" or die "Couldn't open transactions_$shard.js: $!";
         @tran = @transactions[$min..$top];
         print $file "if (!trades) var trades = {};\n",
@@ -158,9 +158,7 @@ while ($min < @transactions) {
                     to_json(\@tran), ';';
         close $file;
         $shard++;
-        $min = $max + 1;
-        $max = $max + 1000;
-        $max = @transactions if $max > @transactions;
+        $min = $top + 1;
     }
     else {
         $max += 1000;
