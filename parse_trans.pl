@@ -121,7 +121,7 @@ do {
         $seen_players{$bbrefid} = {
             first => $first,
             last  => $last,
-            name  => $name,
+            #name  => $name,
         }
     }
 
