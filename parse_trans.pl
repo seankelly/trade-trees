@@ -182,7 +182,7 @@ while ($min < @transactions) {
 # Dump the players.
 open my $file, '>', "players.js" or die "Couldn't open players.js: $!";
 print $file "if (!trades) var trades = {};\n",
-            "trades.players = ", to_json(\%seen_players);
+            "trades.players = ", to_json(\%seen_players), ';';
 close $file;
 
 # Dump the players' transactions.
