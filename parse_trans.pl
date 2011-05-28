@@ -142,7 +142,7 @@ for my $id (@ids) {
 
 # Shard %transactions into files of 5000 transactions each.
 my ($min, $max) = (0, 999);
-my ($size, $limit, $shard) = (0, 512*1024, 0);
+my ($size, $limit, $shard) = (0, 800*1024, 0);
 while ($min < @transactions) {
     my @tran = @transactions[$min..$max];
     $size = length(to_json(\@tran));
