@@ -268,8 +268,9 @@ function initialize() {
 function load_players() {
     var player_list = [];
     for (var id in trades.players) {
-        var first = trades.players[id].first;
-        var last = trades.players[id].last;
+        var p = trades.players[id];
+        var first = p.first;
+        var last = p.last;
         var name = first + ' ' + last;
         if (first != "" && last != "") {
             // Only include players with a first and last name
@@ -282,7 +283,7 @@ function load_players() {
             // their player 'id'. It will be their full name.
             name = id;
         }
-        trades.players[id].name = name;
+        p.name = name;
     }
     player_list.sort(function(a, b) {
         if (a.name < b.name) return -1;
