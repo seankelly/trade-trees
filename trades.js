@@ -210,6 +210,8 @@ function is_same_team(from, to) {
 }
 
 function fentry(fname, args) {
+    // Disable it for now.
+    return;
     if (!console || !console.log) return;
     var log = "==> " + fname;
     if (args && args.length > 0) {
