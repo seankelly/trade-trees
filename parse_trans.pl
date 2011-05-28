@@ -147,7 +147,9 @@ for my $id (@ids) {
 # Sort the player's transactions by date.
 for my $bbrefid (keys %player_transactions) {
     my $p = $player_transactions{$bbrefid};
-    my @trans = sort {
+    my @trans = map {
+        int($_)
+    } sort {
         $p->{$a} cmp $p->{$b}
     } keys %{ $p };
 
