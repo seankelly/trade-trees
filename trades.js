@@ -284,6 +284,10 @@ function load_players() {
             name = id;
         }
         p.name = name;
+
+        if (trades.player_trans[id]) {
+            p.transactions = trades.player_trans[id];
+        }
     }
     player_list.sort(function(a, b) {
         if (a.name < b.name) return -1;
