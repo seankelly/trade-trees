@@ -12,6 +12,7 @@ my $csv = Text::CSV->new({ binary => 1 });
 my $json = JSON->new;
 my %players;
 my %seen_players;
+my %player_transactions;
 my %transactions;
 
 open my $retro_transactions, '<', $ARGV[0] or die "Could not open $ARGV[0]: $!";
@@ -124,6 +125,9 @@ do {
         }
     }
 
+    # Save the date for the player's transactions.
+    $player_transactions{$bbrefid}->{$id} = $r[0] if length($bbrefid) > 0;
+
     if (!$transactions{$id}) {
         $transactions{$id} = [ ];
     }
@@ -138,6 +142,16 @@ my @ids = sort { $a <=> $b } map { int($_) } keys %transactions;
 for my $id (@ids) {
     push @transactions, undef while $expected_id++ < $id;
     push @transactions, $transactions{$id};
+}
+
+# Sort the player's transactions by date.
+for my $bbrefid (keys %player_transactions) {
+    my $p = $player_transactions{$bbrefid};
+    my @trans = sort {
+        $p->{$a} cmp $p->{$b}
+    } keys %{ $p };
+
+    $player_transactions{$bbrefid} = \@trans;
 }
 
 # Shard %transactions into files of 5000 transactions each.
@@ -169,4 +183,10 @@ while ($min < @transactions) {
 open my $file, '>', "players.js" or die "Couldn't open players.js: $!";
 print $file "if (!trades) var trades = {};\n",
             "trades.players = ", to_json(\%seen_players);
+close $file;
+
+# Dump the players' transactions.
+open $file, '>', "player_trans.js" or die "Couldn't open player_trans.js: $!";
+print $file "if (!trades) var trades = {};\n",
+            "trades.player_trans = ", to_json(\%player_transactions), ';';
 close $file;
