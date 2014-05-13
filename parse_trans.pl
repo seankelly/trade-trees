@@ -126,11 +126,10 @@ do {
     }
 
     # Save the date for the player's transactions.
-    $player_transactions{$bbrefid}->{$id} = $r[0] if length($bbrefid) > 0;
+    $player_transactions{$bbrefid}->{$id} = $r[0]
+        if length($bbrefid) > 0;
 
-    if (!$transactions{$id}) {
-        $transactions{$id} = [ ];
-    }
+    $transactions{$id} ||= [];
     push @{ $transactions{$id} }, $trade_info;
 } while ($row = $csv->getline($retro_transactions));
 close $retro_transactions;
@@ -147,11 +146,9 @@ for my $id (@ids) {
 # Sort the player's transactions by date.
 for my $bbrefid (keys %player_transactions) {
     my $p = $player_transactions{$bbrefid};
-    my @trans = map {
-        int($_)
-    } sort {
-        $p->{$a} cmp $p->{$b}
-    } keys %{ $p };
+    my @trans = map { int($_) }
+                sort { $p->{$a} cmp $p->{$b} }
+                keys %{ $p };
 
     $player_transactions{$bbrefid} = \@trans;
 }
